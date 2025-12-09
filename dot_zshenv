@@ -1,0 +1,23 @@
+# include secrets
+source ~/.zshenv.secrets
+
+# browser
+if [ -n "$DISPLAY" ]; then
+    BROWSER='google-chrome-stable'
+fi
+
+# android sdk
+export ANDROID_HOME=~/android-sdk
+export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH=$PATH:$ANDROID_HOME/emulator
+
+# flutter
+export PATH=$HOME/flutter/bin:$PATH
+export CHROME_EXECUTABLE=/opt/google/chrome/chrome
+
+# flutterflow
+export PATH="$PATH":"$HOME/.pub-cache/bin"
+
+# neovim
+export EDITOR='nvim'

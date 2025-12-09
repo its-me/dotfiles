@@ -1,0 +1,92 @@
+# include secrets
+source ~/.zshrc.local.secrets
+
+# user completions
+fpath=(~/.zsh/completions $fpath)
+autoload -Uz compinit && compinit
+
+# start ssh-agent with keychain
+eval $(keychain --eval --quiet id_ed25519)
+
+# hstr configuration - add this to ~/.zshrc
+alias hh=hstr                    # hh to be alias for hstr
+setopt histignorespace           # skip cmds w/ leading space from history
+export HSTR_CONFIG=hicolor       # get more colors
+hstr_no_tiocsti() {
+    zle -I
+    { HSTR_OUT="$( { </dev/tty hstr ${BUFFER}; } 2>&1 1>&3 3>&- )"; } 3>&1;
+    BUFFER="${HSTR_OUT}"
+    CURSOR=${#BUFFER}
+    zle redisplay
+}
+zle -N hstr_no_tiocsti
+bindkey '\C-r' hstr_no_tiocsti
+export HSTR_TIOCSTI=n
+
+# zsh history
+HISTSIZE=10000
+SAVEHIST=10000
+
+# nvm
+source /usr/share/nvm/init-nvm.sh
+
+# shell
+alias c='cat'
+
+# paru
+alias p='paru'
+alias pu='paru -Syu'
+alias pa='paru -S'
+alias pr='paru -Rus'
+alias pq='paru -Qi'
+
+# trashy
+alias rm='trash put'
+alias rmdir='trash put'
+alias rmp='command rm'
+alias rmdirp='command rmdir'
+# disable buggy trashy completions and use file completion instead
+compdef _files trash
+
+# chezmoi
+alias cz='chezmoi'
+alias czp='chezmoi --cache ~/.cache/chezmoi.private --config ~/.config/chezmoi.private/chezmoi.yaml --source ~/.local/share/chezmoi.private'
+
+# yadm
+alias y='yadm'
+yc () { yadm commit -am "$*" }
+#alias yp='yadm push'
+ycp () { yadm commit -am "$*" && yadm push }
+#alias yl='yadm list'
+alias ys='yadm status'
+
+# git
+alias g='git'
+alias ga='git add'
+alias gc='git commit'
+alias gp='git push'
+gcp () { git commit -am "$*" && git push }
+alias gl='git log'
+alias gs='git status'
+
+# docker
+alias d='docker'
+alias dp='docker ps'
+alias ds='docker stop'
+alias dr='docker rm'
+dsr () { docker stop "$@" && docker rm "$@" }
+alias db='docker build'
+#alias di='docker images'
+alias dn='docker network'
+
+# neovim
+alias v='nvim'
+alias vi='nvim'
+alias vim='nvim'
+alias nvim-update='nvim --headless -c "Lazy! sync" +qa'
+
+# kopia
+alias b='sudo kopia snapshot create /etc && kopia snapshot create ~'
+
+# flutter
+alias f='flutter'

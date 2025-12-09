@@ -1,0 +1,10 @@
+[Unit]
+Description=Clean trash files older than 30 days using trashy
+Documentation=https://github.com/oberblastmeister/trashy
+
+[Service]
+Type=oneshot
+ExecStart=trash empty --older-than 30d --force
+
+[Install]
+WantedBy=default.target

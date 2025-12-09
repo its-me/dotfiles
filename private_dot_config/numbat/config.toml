@@ -1,0 +1,7 @@
+intro-banner = "long"
+prompt = ">>> "
+pretty-print = "auto"
+color = "auto"
+
+[exchange-rates]
+fetching-policy = "on-startup"

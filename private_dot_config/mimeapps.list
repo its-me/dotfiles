@@ -1,0 +1,15 @@
+[Added Associations]
+x-scheme-handler/tg=userapp-Telegram Desktop-Q913H1.desktop;userapp-Telegram Desktop-GU55V1.desktop;org.telegram.desktop.desktop;
+application/x-bittorrent=io.github.TransmissionRemoteGtk.desktop;transmission-gtk.desktop;
+x-scheme-handler/tonsite=org.telegram.desktop.desktop;
+
+[Default Applications]
+x-scheme-handler/tg=org.telegram.desktop.desktop
+x-scheme-handler/http=google-chrome.desktop
+x-scheme-handler/https=google-chrome.desktop
+text/html=google-chrome.desktop
+application/x-bittorrent=transmission-gtk.desktop
+x-scheme-handler/tonsite=org.telegram.desktop.desktop
+x-scheme-handler/about=google-chrome.desktop
+x-scheme-handler/unknown=google-chrome.desktop
+x-scheme-handler/mailto=google-chrome.desktop

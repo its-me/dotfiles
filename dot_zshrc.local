@@ -50,9 +50,6 @@ compdef _files trash
 
 
 # chezmoi
-#alias cz='chezmoi'
-alias czp='chezmoi --cache ~/.cache/chezmoi.private --config ~/.config/chezmoi.private/chezmoi.yaml --source ~/.local/share/chezmoi.private'
-
 cz() {
   local subcmd=$1
   shift
@@ -74,6 +71,31 @@ cz() {
       ;;
     *)
       chezmoi "$subcmd" "$@"
+      ;;
+  esac
+}
+
+czp() {
+  local subcmd=$1
+  shift
+
+  case "$subcmd" in
+    s)
+      chezmoi --cache ~/.cache/chezmoi.private --config ~/.config/chezmoi.private/chezmoi.yaml --source ~/.local/share/chezmoi.private status
+      ;;
+    e)
+      chezmoi --cache ~/.cache/chezmoi.private --config ~/.config/chezmoi.private/chezmoi.yaml --source ~/.local/share/chezmoi.private edit "$@"
+      ;;
+    a)
+      chezmoi --cache ~/.cache/chezmoi.private --config ~/.config/chezmoi.private/chezmoi.yaml --source ~/.local/share/chezmoi.private apply -v
+      ;;
+    p)
+      chezmoi --cache ~/.cache/chezmoi.private --config ~/.config/chezmoi.private/chezmoi.yaml --source ~/.local/share/chezmoi.private git add . && \
+      chezmoi --cache ~/.cache/chezmoi.private --config ~/.config/chezmoi.private/chezmoi.yaml --source ~/.local/share/chezmoi.private git commit -- -a -m "$*" && \
+      chezmoi --cache ~/.cache/chezmoi.private --config ~/.config/chezmoi.private/chezmoi.yaml --source ~/.local/share/chezmoi.private git push
+      ;;
+    *)
+      chezmoi --cache ~/.cache/chezmoi.private --config ~/.config/chezmoi.private/chezmoi.yaml --source ~/.local/share/chezmoi.private "$subcmd" "$@"
       ;;
   esac
 }

@@ -48,9 +48,36 @@ alias rmdirp='command rmdir'
 # disable buggy trashy completions and use file completion instead
 compdef _files trash
 
+
 # chezmoi
-alias cz='chezmoi'
+#alias cz='chezmoi'
 alias czp='chezmoi --cache ~/.cache/chezmoi.private --config ~/.config/chezmoi.private/chezmoi.yaml --source ~/.local/share/chezmoi.private'
+
+cz() {
+  local subcmd=$1
+  shift
+
+  case "$subcmd" in
+    s)
+      chezmoi status
+      ;;
+    e)
+      chezmoi edit "$@"
+      ;;
+    a)
+      chezmoi apply -v
+      ;;
+    p)
+      chezmoi git add . && \
+      chezmoi git commit -- -a -m "$*" && \
+      chezmoi git push
+      ;;
+    *)
+      chezmoi "$subcmd" "$@"
+      ;;
+  esac
+}
+
 
 # yadm
 alias y='yadm'

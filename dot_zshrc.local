@@ -41,8 +41,8 @@ alias pr='paru -Rus'
 alias pq='paru -Qi'
 
 # trashy
-alias rm='trash put'
-alias rmdir='trash put'
+alias rm='trashy put'
+alias rmdir='trashy put'
 alias rmp='command rm'
 alias rmdirp='command rmdir'
 # disable buggy trashy completions and use file completion instead

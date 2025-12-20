@@ -30,9 +30,6 @@ SAVEHIST=10000
 # nvm
 source /usr/share/nvm/init-nvm.sh
 
-# shell
-alias c='cat'
-
 # paru
 alias p='paru'
 alias pu='paru -Syu'

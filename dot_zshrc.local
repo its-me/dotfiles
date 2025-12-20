@@ -61,10 +61,20 @@ cz() {
     e)
       chezmoi edit "$@"
       ;;
+    d)
+      chezmoi diff
+      ;;
     a)
       chezmoi apply -v
       ;;
+    c)
+      chezmoi git add . && \
+      chezmoi git commit -- -a -m "$*" && \
+      ;;
     p)
+      chezmoi git push
+      ;;
+    cp)
       chezmoi git add . && \
       chezmoi git commit -- -a -m "$*" && \
       chezmoi git push
@@ -86,15 +96,25 @@ czp() {
     e)
       chezmoi --cache ~/.cache/chezmoi.private --config ~/.config/chezmoi.private/chezmoi.yaml --source ~/.local/share/chezmoi.private edit "$@"
       ;;
+    d)
+      chezmoi --cache ~/.cache/chezmoi.private --config ~/.config/chezmoi.private/chezmoi.yaml --source ~/.local/share/chezmoi.private diff
+      ;;
     a)
       chezmoi --cache ~/.cache/chezmoi.private --config ~/.config/chezmoi.private/chezmoi.yaml --source ~/.local/share/chezmoi.private apply -v
       ;;
+    c)
+      chezmoi --cache ~/.cache/chezmoi.private --config ~/.config/chezmoi.private/chezmoi.yaml --source ~/.local/share/chezmoi.private git add . && \
+      chezmoi --cache ~/.cache/chezmoi.private --config ~/.config/chezmoi.private/chezmoi.yaml --source ~/.local/share/chezmoi.private git commit -- -a -m "$*" && \
+      ;;
     p)
+      chezmoi --cache ~/.cache/chezmoi.private --config ~/.config/chezmoi.private/chezmoi.yaml --source ~/.local/share/chezmoi.private git push
+      ;;
+    cp)
       chezmoi --cache ~/.cache/chezmoi.private --config ~/.config/chezmoi.private/chezmoi.yaml --source ~/.local/share/chezmoi.private git add . && \
       chezmoi --cache ~/.cache/chezmoi.private --config ~/.config/chezmoi.private/chezmoi.yaml --source ~/.local/share/chezmoi.private git commit -- -a -m "$*" && \
       chezmoi --cache ~/.cache/chezmoi.private --config ~/.config/chezmoi.private/chezmoi.yaml --source ~/.local/share/chezmoi.private git push
       ;;
-    *)
+   *)
       chezmoi --cache ~/.cache/chezmoi.private --config ~/.config/chezmoi.private/chezmoi.yaml --source ~/.local/share/chezmoi.private "$subcmd" "$@"
       ;;
   esac

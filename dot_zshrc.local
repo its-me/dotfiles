@@ -121,14 +121,6 @@ czp() {
 }
 
 
-# yadm
-alias y='yadm'
-yc () { yadm commit -am "$*" }
-#alias yp='yadm push'
-ycp () { yadm commit -am "$*" && yadm push }
-#alias yl='yadm list'
-alias ys='yadm status'
-
 # git
 alias g='git'
 alias ga='git add'

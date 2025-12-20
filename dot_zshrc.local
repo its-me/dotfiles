@@ -119,13 +119,36 @@ czp() {
 
 
 # git
-alias g='git'
-alias ga='git add'
-alias gc='git commit'
-alias gp='git push'
-gcp () { git commit -am "$*" && git push }
-alias gl='git log'
-alias gs='git status'
+g() {
+  local subcmd=$1
+  shift
+
+  case "$subcmd" in
+    a)
+      git add "$@"
+      ;;
+    c)
+      git commit -- -a -m "$*"
+      ;;
+    p)
+      git push
+      ;;
+    cp)
+      git commit -- -a -m "$*" && \
+      git push
+      ;;
+    l)
+      git log
+      ;;
+    s)
+      git status
+      ;;
+    *)
+      git "$subcmd" "$@"
+      ;;
+  esac
+}
+
 
 # docker
 alias d='docker'

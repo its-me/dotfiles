@@ -154,8 +154,33 @@ alias vi='nvim'
 alias vim='nvim'
 alias nvim-update='nvim --headless -c "Lazy! sync" +qa'
 
+
 # kopia
-alias b='sudo kopia snapshot create /etc && kopia snapshot create ~'
+k() {
+  local subcmd=$1
+  shift
+
+  case "$subcmd" in
+    b)
+      echo && \
+      sudo kopia snapshot create /etc && \
+      echo && \
+      kopia snapshot create ~
+      echo
+      ;;
+    l)
+      echo && \
+      sudo kopia snapshot list /etc && \
+      echo && \
+      kopia snapshot list ~
+      echo
+      ;;
+    *)
+      kopia "$subcmd" "$@"
+      ;;
+  esac
+}
+
 
 # flutter
 alias f='flutter'

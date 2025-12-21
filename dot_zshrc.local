@@ -160,11 +160,23 @@ alias db='docker build'
 #alias di='docker images'
 alias dn='docker network'
 
+
 # neovim
-alias v='nvim'
 alias vi='nvim'
 alias vim='nvim'
-alias nvim-update='nvim --headless -c "Lazy! sync" +qa'
+nvim() {
+  local subcmd=$1
+  shift
+
+  case "$subcmd" in
+    u)
+      command nvim --headless -c "Lazy! sync" +qa
+      ;;
+    *)
+      command nvim "$subcmd" "$@"
+      ;;
+  esac
+}
 
 
 # kopia

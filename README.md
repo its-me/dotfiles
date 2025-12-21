@@ -36,6 +36,12 @@
 | `cz p` | `chezmoi git push` |
 | `cz cp <commit message>` | `chezmoi git add . && chezmoi git commit -- -a -m <commit message> && chezmoi git push` |
 
+### neovim
+
+| alias | description |
+| :--- | :--- |
+| `nvim u` | update neovim plugins |
+
 ### kopia
 
 | alias | command |

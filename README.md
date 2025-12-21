@@ -11,6 +11,15 @@
 
 ## zsh aliases
 
+### paru
+
+| alias | command |
+| :--- | :--- |
+| `p` | `paru` (`paru -Syu` with no arguments) |
+| `p s <packages>` | `paru -S <packages>` |
+| `p r <packages>` | `paru -Rus <packages>` |
+| `p q <package>` | `paru -Qi <package>` |
+
 ### git
 
 | alias | command |

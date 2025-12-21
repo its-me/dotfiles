@@ -30,13 +30,6 @@ SAVEHIST=10000
 # nvm
 source /usr/share/nvm/init-nvm.sh
 
-# paru
-alias p='paru'
-alias pu='paru -Syu'
-alias pa='paru -S'
-alias pr='paru -Rus'
-alias pq='paru -Qi'
-
 # trashy
 alias rm='trashy put'
 alias rmdir='trashy put'
@@ -44,6 +37,31 @@ alias rmp='command rm'
 alias rmdirp='command rmdir'
 # disable buggy trashy completions and use file completion instead
 compdef _files trash
+
+
+# paru
+p() {
+  local subcmd=$1
+  shift
+
+  case "$subcmd" in
+    u)
+      paru -Syu
+      ;;
+    s)
+      paru -S "$@"
+      ;;
+    r)
+      paru -Rus "$@"
+      ;;
+    q)
+      paru -Qi "$@"
+      ;;
+    *)
+      paru "$subcmd" "$@"
+      ;;
+  esac
+}
 
 
 # chezmoi

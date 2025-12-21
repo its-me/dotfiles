@@ -45,9 +45,6 @@ p() {
   shift
 
   case "$subcmd" in
-    u)
-      paru -Syu
-      ;;
     s)
       paru -S "$@"
       ;;

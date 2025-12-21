@@ -180,7 +180,7 @@ k() {
       kopia snapshot create ~
       echo
       ;;
-    l)
+    s)
       echo && \
       sudo kopia snapshot list /etc && \
       echo && \

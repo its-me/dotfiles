@@ -35,3 +35,10 @@
 | `cz c <commit message>` | `chezmoi git add . && chezmoi git commit -- -a -m <commit message>` |
 | `cz p` | `chezmoi git push` |
 | `cz cp <commit message>` | `chezmoi git add . && chezmoi git commit -- -a -m <commit message> && chezmoi git push` |
+
+### kopia
+
+| alias | command |
+| :--- | :--- |
+| `k b` | `sudo kopia snapshot create /etc && kopia snapshot create ~` |
+| `k s` | `sudo kopia snapshot list /etc && kopia snapshot list ~` |

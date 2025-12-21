@@ -213,14 +213,40 @@ g() {
 
 
 # docker
-alias d='docker'
-alias dp='docker ps'
-alias ds='docker stop'
-alias dr='docker rm'
-dsr () { docker stop "$@" && docker rm "$@" }
-alias db='docker build'
-#alias di='docker images'
-alias dn='docker network'
+d() {
+  if [[ $# -eq 0 ]]; then
+    docker
+    return
+  fi
+
+  local subcmd=$1
+  shift
+
+  case "$subcmd" in
+    b)
+      docker build "$@"
+      ;;
+    i)
+      docker images "$@"
+      ;;
+    r)
+      docker rm "$@"
+      ;;
+    ri)
+      docker rmi "$@"
+      ;;
+    s)
+      docker stop "$@"
+      ;;
+    sr)
+      docker stop "$@" && \
+      docker rm "$@"
+      ;;
+    *)
+      docker "$subcmd" "$@"
+      ;;
+  esac
+}
 
 
 # flutter

@@ -58,6 +58,18 @@
 | `g l` | `git log` |
 | `g s` | `git status` |
 
+### docker
+
+| alias | command |
+| :--- | :--- |
+| `d [args]` | `docker [args]` |
+| `d b <args>` | `docker build <args>` |
+| `d i [args]` | `docker images [args]` |
+| `d r <args>` | `docker rm <args>` |
+| `d ri <args>` | `docker rmi <args>` |
+| `d s <args>` | `docker stop <args>` |
+| `d sr <args>` | `docker stop <args> && docker rm <args>` |
+
 ### flutter
 
 | alias | command |

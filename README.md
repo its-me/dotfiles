@@ -57,3 +57,14 @@
 | :--- | :--- |
 | `k b` | `sudo kopia snapshot create /etc && kopia snapshot create ~` |
 | `k s` | `sudo kopia snapshot list /etc && kopia snapshot list ~` |
+
+### flutter
+
+| alias | command |
+| :--- | :--- |
+| `f [args]` | `flutter [args]` |
+| `f b <args>` | `flutter build <args>` |
+| `f c [args]` | `flutter clean [args]` |
+| `f r [args]` | `flutter run [args]` |
+| `f d [args]` | `flutter devices [args]` |
+| `f e [args]` | `flutter emulators [args]` |

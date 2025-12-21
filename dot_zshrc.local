@@ -222,4 +222,33 @@ k() {
 
 
 # flutter
-alias f='flutter'
+f() {
+  if [[ $# -eq 0 ]]; then
+    flutter
+    return
+  fi
+
+  local subcmd=$1
+  shift
+
+  case "$subcmd" in
+    b)
+      flutter build "$@"
+      ;;
+    c)
+      flutter clean "$@"
+      ;;
+    r)
+      flutter run "$@"
+      ;;
+    d)
+      flutter devices "$@"
+      ;;
+    e)
+      flutter emulators "$@"
+      ;;
+    *)
+      flutter "$subcmd" "$@"
+      ;;
+  esac
+}

@@ -43,6 +43,11 @@ compdef _files trash
 
 # paru
 p() {
+  if [[ $# -eq 0 ]]; then
+    paru
+    return
+  fi
+
   local subcmd=$1
   shift
 
@@ -65,6 +70,11 @@ p() {
 
 # chezmoi
 cz() {
+  if [[ $# -eq 0 ]]; then
+    chezmoi
+    return
+  fi
+
   local subcmd=$1
   shift
 
@@ -100,6 +110,11 @@ cz() {
 }
 
 czp() {
+  if [[ $# -eq 0 ]]; then
+    chezmoi --cache ~/.cache/chezmoi.private --config ~/.config/chezmoi.private/chezmoi.yaml --source ~/.local/share/chezmoi.private
+    return
+  fi
+
   local subcmd=$1
   shift
 
@@ -137,6 +152,11 @@ czp() {
 
 # kopia
 k() {
+  if [[ $# -eq 0 ]]; then
+    kopia
+    return
+  fi
+
   local subcmd=$1
   shift
 
@@ -166,6 +186,11 @@ k() {
 alias vi='nvim'
 alias vim='nvim'
 nvim() {
+  if [[ $# -eq 0 ]]; then
+    command nvim
+    return
+  fi
+
   local subcmd=$1
   shift
 
@@ -182,6 +207,11 @@ nvim() {
 
 # git
 g() {
+  if [[ $# -eq 0 ]]; then
+    git
+    return
+  fi
+
   local subcmd=$1
   shift
 

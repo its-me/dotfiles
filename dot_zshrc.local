@@ -143,7 +143,7 @@ g() {
       git add "$@"
       ;;
     c)
-      git commit -- -a -m "$*"
+      git commit -a -m "$*"
       ;;
     p)
       git push

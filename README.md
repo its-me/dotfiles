@@ -1,3 +1,14 @@
+## hotkeys
+
+### niri
+
+| hotkey | action |
+| :--- | :--- |
+| Super+Shift+/ | show hotkeys panel |
+| Mod+Shift+R | switch window height |
+| Mod+[ | move window to column on left |
+| Mod+] | move window to column on right |
+
 ## zsh aliases
 
 ### git

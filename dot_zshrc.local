@@ -27,8 +27,10 @@ export HSTR_TIOCSTI=n
 HISTSIZE=10000
 SAVEHIST=10000
 
+
 # nvm
 source /usr/share/nvm/init-nvm.sh
+
 
 # trashy
 alias rm='trashy put'
@@ -133,6 +135,51 @@ czp() {
 }
 
 
+# kopia
+k() {
+  local subcmd=$1
+  shift
+
+  case "$subcmd" in
+    b)
+      echo && \
+      sudo kopia snapshot create /etc && \
+      echo && \
+      kopia snapshot create ~
+      echo
+      ;;
+    s)
+      echo && \
+      sudo kopia snapshot list /etc && \
+      echo && \
+      kopia snapshot list ~
+      echo
+      ;;
+    *)
+      kopia "$subcmd" "$@"
+      ;;
+  esac
+}
+
+
+# neovim
+alias vi='nvim'
+alias vim='nvim'
+nvim() {
+  local subcmd=$1
+  shift
+
+  case "$subcmd" in
+    u)
+      command nvim --headless -c "Lazy! sync" +qa
+      ;;
+    *)
+      command nvim "$subcmd" "$@"
+      ;;
+  esac
+}
+
+
 # git
 g() {
   local subcmd=$1
@@ -174,51 +221,6 @@ dsr () { docker stop "$@" && docker rm "$@" }
 alias db='docker build'
 #alias di='docker images'
 alias dn='docker network'
-
-
-# neovim
-alias vi='nvim'
-alias vim='nvim'
-nvim() {
-  local subcmd=$1
-  shift
-
-  case "$subcmd" in
-    u)
-      command nvim --headless -c "Lazy! sync" +qa
-      ;;
-    *)
-      command nvim "$subcmd" "$@"
-      ;;
-  esac
-}
-
-
-# kopia
-k() {
-  local subcmd=$1
-  shift
-
-  case "$subcmd" in
-    b)
-      echo && \
-      sudo kopia snapshot create /etc && \
-      echo && \
-      kopia snapshot create ~
-      echo
-      ;;
-    s)
-      echo && \
-      sudo kopia snapshot list /etc && \
-      echo && \
-      kopia snapshot list ~
-      echo
-      ;;
-    *)
-      kopia "$subcmd" "$@"
-      ;;
-  esac
-}
 
 
 # flutter

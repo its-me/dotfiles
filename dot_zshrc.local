@@ -149,7 +149,7 @@ g() {
       git push
       ;;
     cp)
-      git commit -- -a -m "$*" && \
+      git commit -a -m "$*" && \
       git push
       ;;
     l)

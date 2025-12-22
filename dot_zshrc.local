@@ -257,7 +257,7 @@ d() {
       docker build "$@"
       ;;
     i)
-      docker images "$@"
+      docker images --all "$@"
       ;;
     r)
       docker rm "$@"

@@ -64,7 +64,7 @@
 | :--- | :--- |
 | `d [args]` | `docker [args]` |
 | `d b <args>` | `docker build <args>` |
-| `d i [args]` | `docker images [args]` |
+| `d i [args]` | `docker images --all [args]` |
 | `d r <args>` | `docker rm <args>` |
 | `d ri <args>` | `docker rmi <args>` |
 | `d s <args>` | `docker stop <args>` |

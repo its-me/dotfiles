@@ -1,7 +1,8 @@
 daemonize = true
 pid_file = "/run/user/1000/clipcatd.pid"
-primary_threshold_ms = 5000
-max_history = 1024
+# https://github.com/xrelkd/clipcat/issues/360
+primary_threshold_ms = 10000
+max_history = 10000
 synchronize_selection_with_clipboard = true
 history_file_path = "/home/itsme/.cache/clipcat/clipcatd-history"
 snippets = []
@@ -21,7 +22,7 @@ filter_text_min_length = 1
 filter_text_max_length = 20000000
 denied_text_regex_patterns = []
 capture_image = true
-filter_image_max_size = 5242880
+filter_image_max_size = 16777216
 
 [grpc]
 enable_http = true

@@ -16,8 +16,8 @@
 | alias | command |
 | :--- | :--- |
 | `p` | `paru` (`paru -Syu` with no arguments) |
-| `p s <packages>` | `paru -S <packages>` |
-| `p r <packages>` | `paru -Rus <packages>` |
+| `p i <packages>` | `paru -S <packages>` |
+| `p u <packages>` | `paru -Rus <packages>` |
 | `p q <package>` | `paru -Qi <package>` |
 
 ### chezmoi

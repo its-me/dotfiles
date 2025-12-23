@@ -4,6 +4,9 @@ source ~/.zshrc.local.secrets
 # user completions
 fpath=(~/.zsh/completions $fpath)
 autoload -Uz compinit && compinit
+  
+# 1password cli completion
+eval "$(op completion zsh)"; compdef _op op
 
 # start ssh-agent with keychain
 eval $(keychain --eval --quiet id_ed25519)

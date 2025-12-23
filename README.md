@@ -32,6 +32,9 @@
 | `cz c <commit message>` | `chezmoi git add . && chezmoi git commit -- -a -m <commit message>` |
 | `cz p` | `chezmoi git push` |
 | `cz cp <commit message>` | `chezmoi git add . && chezmoi git commit -- -a -m <commit message> && chezmoi git push` |
+| `cz g [args]` | `chezmoi git [args]` |
+| `cz g s` | `chezmoi git status` |
+| `cz g l` | `chezmoi git log` |
 
 ### kopia
 

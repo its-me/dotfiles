@@ -1,0 +1,43 @@
+# https://github.com/JakeStanger/ironbar/wiki/configuration-guide
+
+position: top
+height: 24
+start:
+- type: workspaces
+center:
+- type: focused
+  icon_size: 16
+end:
+  - type: "volume"
+    format: "{icon} {percentage}%"
+    max_volume: 150
+    truncate: "middle"
+    icons:
+      volume_high: "󰕾"
+      volume_medium: "󰖀"
+      volume_low: "󰕿"
+      muted: "󰝟"
+  - type: sys_info
+    format:
+    - '{cpu_percent}% '
+    - '{memory_percent}% '
+    interval:
+      cpu: 1
+  - type: battery
+    icon_size: 16
+    format: "{percentage}%"
+    thresholds:
+      warning: 25
+      critical: 10
+  - type: keyboard
+    show_scroll: false
+    icons:
+      caps_on: 󰪛
+      layout_map:
+        "English (US)": 🇺🇸
+        Russian: 🇺🇦
+  - type: tray
+    icon_size: 32
+  - type: clock
+    format: "%Y-%m-%d %H:%M:%S"
+    format_popup: "%Y-%m-%d %H:%M:%S GMT%:::z"

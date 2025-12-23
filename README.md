@@ -9,6 +9,12 @@
 | Mod+[ | move window to column on left |
 | Mod+] | move window to column on right |
 
+### zsh
+
+| hotkey | action |
+| :--- | :--- |
+| Ctrl+R | run hstr |
+
 ## zsh aliases
 
 ### paru

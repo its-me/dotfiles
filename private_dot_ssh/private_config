@@ -1,0 +1,16 @@
+StrictHostKeyChecking no
+
+Host *
+	IdentityAgent ~/.1password/agent.sock
+	ControlMaster auto
+	ControlPath ~/.ssh/sockets/%r@%h-%p
+	ControlPersist 600
+  #KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
+	ForwardAgent yes
+	Compression yes
+	SetEnv TERM=xterm-256color
+  #ServerAliveInterval 60 # fix of lame internet
+
+Host aur.archlinux.org
+	User aur
+	#IdentityFile ~/.ssh/aur

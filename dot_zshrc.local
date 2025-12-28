@@ -8,8 +8,8 @@ autoload -Uz compinit && compinit
 # 1password cli completion
 eval "$(op completion zsh)"; compdef _op op
 
-# start ssh-agent with keychain
-eval $(keychain --eval --quiet id_ed25519)
+# 1Password SSH agent
+export SSH_AUTH_SOCK=~/.1password/agent.sock
 
 # hstr configuration - add this to ~/.zshrc
 alias hh=hstr                    # hh to be alias for hstr

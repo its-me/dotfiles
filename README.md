@@ -23,8 +23,9 @@
 | :--- | :--- |
 | `p` | `paru` (`paru -Syu` with no arguments) |
 | `p i <packages>` | `paru -S <packages>` |
+| `p id <packages>` | `paru -S --asdeps <packages>` |
 | `p u <packages>` | `paru -Rus <packages>` |
-| `p q <package>` | `paru -Qi <package>` |
+| `p q [packages]` | `paru -Qi [packages]` |
 
 ### chezmoi
 

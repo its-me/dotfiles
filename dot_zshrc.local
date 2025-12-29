@@ -58,6 +58,9 @@ p() {
     i)
       paru -S "$@"
       ;;
+    id)
+      paru -S --asdeps "$@"
+      ;;
     u)
       paru -Rus "$@"
       ;;

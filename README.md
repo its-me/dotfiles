@@ -43,6 +43,13 @@
 | `cz g s` | `chezmoi git status` |
 | `cz g l` | `chezmoi git log` |
 
+### rage
+
+| alias | description |
+| :--- | :--- |
+| `rage e <key_file> <file_to_encrypt> [encrypted_output]` | Encrypt file |
+| `rage d <key_file> <encrypted_file> [output_file]` | Decrypt file |
+
 ### kopia
 
 | alias | command |

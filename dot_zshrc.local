@@ -91,6 +91,71 @@ p() {
 }
 
 
+# rage
+rage() {
+  if [[ $# -eq 0 ]]; then
+    command rage
+    return
+  fi
+  
+  local subcmd=$1
+  shift
+  
+  case "$subcmd" in
+    e)
+      # Encrypt: rage e <key_file> <file_to_encrypt> [encrypted_output]
+      local key_file=$1
+      local input_file=$2
+      local output_file=${3:-${input_file}.age}
+      
+      if [[ ! -f "$key_file" ]]; then
+        echo "Error: Key file '$key_file' not found" >&2
+        return 1
+      fi
+      
+      if [[ ! -f "$input_file" ]]; then
+        echo "Error: Input file '$input_file' not found" >&2
+        return 1
+      fi
+      
+      # Extract public key from private key file
+      local public_key=$(command rage-keygen -y "$key_file" 2>/dev/null)
+      
+      if [[ -z "$public_key" ]]; then
+        echo "Error: Could not extract public key from '$key_file'" >&2
+        return 1
+      fi
+      
+      command rage -r "$public_key" -e "$input_file" -o "$output_file"
+      ;;
+      
+    d)
+      # Decrypt: rage d <key_file> <encrypted_file> [output_file]
+      local key_file=$1
+      local encrypted_file=$2
+      local output_file=${3:-${encrypted_file%.age}}
+      
+      if [[ ! -f "$key_file" ]]; then
+        echo "Error: Key file '$key_file' not found" >&2
+        return 1
+      fi
+      
+      if [[ ! -f "$encrypted_file" ]]; then
+        echo "Error: Encrypted file '$encrypted_file' not found" >&2
+        return 1
+      fi
+      
+      command rage -i "$key_file" -d "$encrypted_file" -o "$output_file"
+      ;;
+      
+    *)
+      # Pass through to original rage command
+      command rage "$subcmd" "$@"
+      ;;
+  esac
+}
+
+
 # chezmoi
 cz() {
   if [[ $# -eq 0 ]]; then

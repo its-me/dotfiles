@@ -36,7 +36,24 @@ source /usr/share/nvm/init-nvm.sh
 
 
 # trashy
-alias rm='trashy put'
+rm() {
+  if [[ $# -eq 0 ]]; then
+    trashy put
+    return
+  fi
+
+  local subcmd=$1
+  shift
+
+  case "$subcmd" in
+    -r|-f|-rf|-fr)
+      trashy put "$@"
+      ;;
+    *)
+      trashy put "$subcmd" "$@"
+      ;;
+  esac
+}
 alias rmdir='trashy put'
 alias rmp='command rm'
 alias rmdirp='command rmdir'

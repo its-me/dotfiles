@@ -5,3 +5,7 @@ color = "auto"
 
 [exchange-rates]
 fetching-policy = "on-startup"
+
+# https://github.com/sharkdp/numbat/issues/775
+[formatting]
+digit-separator = ","

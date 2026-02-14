@@ -1,2 +1,14 @@
 [tasks]
 image_bound = [0, 0]
+
+[opener]
+mhtml = [
+    { run = 'google-chrome-stable "$@"', orphan = true, desc = "Open in Chrome" }
+]
+
+[open]
+rules = [
+    { mime = "message/rfc822", use = "mhtml" },
+    { name = "*.mhtml", use = "mhtml" },
+    { name = "*.mht", use = "mhtml" },
+]

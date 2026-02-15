@@ -55,7 +55,7 @@
 | alias | command |
 | :--- | :--- |
 | `k b` | `sudo kopia snapshot create /etc && kopia snapshot create ~` |
-| `k s` | `sudo kopia snapshot list /etc && kopia snapshot list ~` |
+| `k l` | `sudo kopia snapshot list /etc && kopia snapshot list ~` |
 
 ### neovim
 

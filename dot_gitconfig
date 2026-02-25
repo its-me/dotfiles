@@ -1,0 +1,16 @@
+[user]
+  email = sergeykanafyev@gmail.com
+  name = Sergey Kanafyev
+  signingkey = 3E3DC5D6AEFC998F
+[init]
+  defaultBranch = main
+[commit]                                                                                    
+  gpgsign = true                                                                             
+[tag]                                                                                       
+  gpgSign = true  
+
+[includeIf "hasconfig:remote.*.url:https://github.com/**"]
+  path = ~/.gitconfig.github
+
+[includeIf "hasconfig:remote.*.url:git@github.com:*/**"]
+  path = ~/.gitconfig.github

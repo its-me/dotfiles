@@ -9,6 +9,12 @@
 | Mod+[ | move window to column on left |
 | Mod+] | move window to column on right |
 
+### yazi
+
+| hotkey | action |
+| :--- | :--- |
+| Ctrl+Z | toggle block/status bar visibility |
+
 ### zsh
 
 | hotkey | action |

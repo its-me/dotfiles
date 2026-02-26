@@ -7,9 +7,13 @@ rules = [
   { mime = "message/rfc822", use = "mhtml" },
   { name = "*.mhtml", use = "mhtml" },
   { name = "*.mht", use = "mhtml" },
+  { mime = "image/*", use = "image" },
 ]
 
 [opener]
 mhtml = [
   { run = 'google-chrome-stable "$@"', orphan = true, desc = "Open in Chrome" }
+]
+image = [
+  { run = 'viu "$1"; read -k1', desc = "viu", block = true }
 ]

@@ -15,5 +15,5 @@ mhtml = [
   { run = 'google-chrome-stable "$@"', orphan = true, desc = "Open in Chrome" }
 ]
 image = [
-  { run = 'viu "$1"; read -k1', desc = "viu", block = true }
+  { run = 'viu "$1"', desc = "viu", block = true }
 ]

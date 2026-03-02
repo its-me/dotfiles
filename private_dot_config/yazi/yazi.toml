@@ -1,7 +1,6 @@
 [tasks]
 image_bound = [0, 0]
 
-
 [open]
 rules = [
   { mime = "message/rfc822", use = "mhtml" },

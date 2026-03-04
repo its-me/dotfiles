@@ -4,3 +4,5 @@ onepassword:
 encryption: age
 age:
   command: rage
+  identity: ~/.config/chezmoi/age.key
+  recipient: {{ onepasswordRead "op://Personal/chezmoi/recipient" }}

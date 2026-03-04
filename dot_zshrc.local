@@ -206,46 +206,6 @@ cz() {
   esac
 }
 
-czp() {
-  if [[ $# -eq 0 ]]; then
-    chezmoi --cache ~/.cache/chezmoi.private --config ~/.config/chezmoi.private/chezmoi.yaml --source ~/.local/share/chezmoi.private
-    return
-  fi
-
-  local subcmd=$1
-  shift
-
-  case "$subcmd" in
-    s)
-      chezmoi --cache ~/.cache/chezmoi.private --config ~/.config/chezmoi.private/chezmoi.yaml --source ~/.local/share/chezmoi.private status
-      ;;
-    e)
-      chezmoi --cache ~/.cache/chezmoi.private --config ~/.config/chezmoi.private/chezmoi.yaml --source ~/.local/share/chezmoi.private edit "$@"
-      ;;
-    d)
-      chezmoi --cache ~/.cache/chezmoi.private --config ~/.config/chezmoi.private/chezmoi.yaml --source ~/.local/share/chezmoi.private diff
-      ;;
-    a)
-      chezmoi --cache ~/.cache/chezmoi.private --config ~/.config/chezmoi.private/chezmoi.yaml --source ~/.local/share/chezmoi.private apply -v
-      ;;
-    c)
-      chezmoi --cache ~/.cache/chezmoi.private --config ~/.config/chezmoi.private/chezmoi.yaml --source ~/.local/share/chezmoi.private git add . && \
-      chezmoi --cache ~/.cache/chezmoi.private --config ~/.config/chezmoi.private/chezmoi.yaml --source ~/.local/share/chezmoi.private git commit -- -a -m "$*"
-      ;;
-    p)
-      chezmoi --cache ~/.cache/chezmoi.private --config ~/.config/chezmoi.private/chezmoi.yaml --source ~/.local/share/chezmoi.private git push
-      ;;
-    cp)
-      chezmoi --cache ~/.cache/chezmoi.private --config ~/.config/chezmoi.private/chezmoi.yaml --source ~/.local/share/chezmoi.private git add . && \
-      chezmoi --cache ~/.cache/chezmoi.private --config ~/.config/chezmoi.private/chezmoi.yaml --source ~/.local/share/chezmoi.private git commit -- -a -m "$*" && \
-      chezmoi --cache ~/.cache/chezmoi.private --config ~/.config/chezmoi.private/chezmoi.yaml --source ~/.local/share/chezmoi.private git push
-      ;;
-   *)
-      chezmoi --cache ~/.cache/chezmoi.private --config ~/.config/chezmoi.private/chezmoi.yaml --source ~/.local/share/chezmoi.private "$subcmd" "$@"
-      ;;
-  esac
-}
-
 
 # kopia
 k() {

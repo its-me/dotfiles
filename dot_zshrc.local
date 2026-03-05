@@ -55,8 +55,8 @@ rm() {
   esac
 }
 alias rmdir='trashy put'
-alias rmp='command rm'
-alias rmdirp='command rmdir'
+alias rmp='shred -u'
+rmdirp() { find "$1" -type f -exec shred -u {} \; && find "$1" -type d -empty -delete; }
 # disable buggy trashy completions and use file completion instead
 compdef _files trash
 

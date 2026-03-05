@@ -100,54 +100,100 @@ rage() {
   
   local subcmd=$1
   shift
-  
+
+  _rage_resolve_key() {
+    local key_name=$1
+    _rage_key_from_op=0
+
+    if [[ -f "$key_name" ]]; then
+      _rage_key_file="$key_name"
+      return 0
+    fi
+
+    if ! command -v op &>/dev/null; then
+      echo "Error: Key file '$key_name' not found and 1Password CLI (op) is not available" >&2
+      return 1
+    fi
+
+    echo "Key file '$key_name' not found locally, fetching from 1Password..." >&2
+
+    local tmp_key_file="./$key_name"
+
+    if op document get "$key_name" --out-file "$tmp_key_file" 2>/dev/null; then
+      _rage_key_file="$tmp_key_file"
+      _rage_key_from_op=1
+      return 0
+    fi
+
+    rm -f "$tmp_key_file"
+    echo "Error: Could not find '$key_name' locally or as a document in 1Password" >&2
+    return 1
+  }
+
+  _rage_cleanup_key() {
+    if [[ $_rage_key_from_op -eq 1 && -f "$_rage_key_file" ]]; then
+      if command -v shred &>/dev/null; then
+        shred -u "$_rage_key_file"
+      else
+        rm -P "$_rage_key_file" 2>/dev/null || rm -f "$_rage_key_file"
+      fi
+    fi
+  }
+
   case "$subcmd" in
     e)
-      # Encrypt: rage e <key_file> <file_to_encrypt> [encrypted_output]
-      local key_file=$1
+      local key_name=$1
       local input_file=$2
       local output_file=${3:-${input_file}.age}
-      
-      if [[ ! -f "$key_file" ]]; then
-        echo "Error: Key file '$key_file' not found" >&2
+
+      if [[ -z "$key_name" || -z "$input_file" ]]; then
+        echo "Usage: rage e <key_file_or_1password_name> <file_to_encrypt> [output_file]" >&2
         return 1
       fi
-      
+
       if [[ ! -f "$input_file" ]]; then
         echo "Error: Input file '$input_file' not found" >&2
         return 1
       fi
-      
-      # Extract public key from private key file
-      local public_key=$(command rage-keygen -y "$key_file" 2>/dev/null)
-      
+
+      _rage_resolve_key "$key_name" || return 1
+
+      local public_key=$(command rage-keygen -y "$_rage_key_file" 2>/dev/null)
+
       if [[ -z "$public_key" ]]; then
-        echo "Error: Could not extract public key from '$key_file'" >&2
+        echo "Error: Could not extract public key from '$key_name'" >&2
+        _rage_cleanup_key
         return 1
       fi
-      
+
       command rage -r "$public_key" -e "$input_file" -o "$output_file"
+      local exit_code=$?
+      _rage_cleanup_key
+      return $exit_code
       ;;
-      
+
     d)
-      # Decrypt: rage d <key_file> <encrypted_file> [output_file]
-      local key_file=$1
+      local key_name=$1
       local encrypted_file=$2
       local output_file=${3:-${encrypted_file%.age}}
-      
-      if [[ ! -f "$key_file" ]]; then
-        echo "Error: Key file '$key_file' not found" >&2
+
+      if [[ -z "$key_name" || -z "$encrypted_file" ]]; then
+        echo "Usage: rage d <key_file_or_1password_name> <encrypted_file> [output_file]" >&2
         return 1
       fi
-      
+
       if [[ ! -f "$encrypted_file" ]]; then
         echo "Error: Encrypted file '$encrypted_file' not found" >&2
         return 1
       fi
-      
-      command rage -i "$key_file" -d "$encrypted_file" -o "$output_file"
+
+      _rage_resolve_key "$key_name" || return 1
+
+      command rage -i "$_rage_key_file" -d "$encrypted_file" -o "$output_file"
+      local exit_code=$?
+      _rage_cleanup_key
+      return $exit_code
       ;;
-      
     *)
       # Pass through to original rage command
       command rage "$subcmd" "$@"

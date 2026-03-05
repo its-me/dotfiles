@@ -3,16 +3,16 @@ image_bound = [0, 0]
 
 [open]
 rules = [
-  { mime = "message/rfc822", use = "mhtml" },
-  { name = "*.mhtml", use = "mhtml" },
-  { name = "*.mht", use = "mhtml" },
-  { mime = "image/*", use = "image" },
+  { mime = "message/rfc822", use = "chrome" },
+  { name = "*.mhtml", use = "chrome" },
+  { name = "*.mht", use = "chrome" },
+  { mime = "image/*", use = "vui" },
 ]
 
 [opener]
-mhtml = [
+chrome = [
   { run = 'google-chrome-stable "$@"', orphan = true, desc = "Open in Chrome" }
 ]
-image = [
+vui = [
   { run = 'viu "$1"', desc = "viu", block = true }
 ]

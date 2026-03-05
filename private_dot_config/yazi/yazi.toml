@@ -3,6 +3,7 @@ image_bound = [0, 0]
 
 [open]
 rules = [
+  { mime = "application/pdf", use = "chrome" },
   { mime = "message/rfc822", use = "chrome" },
   { name = "*.mhtml", use = "chrome" },
   { name = "*.mht", use = "chrome" },

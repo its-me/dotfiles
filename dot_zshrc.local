@@ -292,6 +292,24 @@ k() {
       kopia snapshot list ~
       echo
       ;;
+    s)
+      local snapshot_id="$1"
+      local path_filter="${2:-}"
+      shift $#
+
+      if [[ -z "$snapshot_id" ]]; then
+        echo "Usage: k s <snapshot-id> [path-filter]" >&2
+        return 1
+      fi
+
+      local output=$(kopia ls --recursive --long "$snapshot_id") || return 1
+
+      if [[ -n "$path_filter" ]]; then
+        echo "$output" | grep "$path_filter" | sed 's/ [A-Z]\{3,4\} [^ ]\{32,\} / /g' | sed 's/\(.\{10\}\)  */\1 /g'
+      else
+        echo "$output" | sed 's/ [A-Z]\{3,4\} [^ ]\{32,\} / /g' | sed 's/\(.\{10\}\)  */\1 /g'
+      fi
+      ;;
     *)
       kopia "$subcmd" "$@"
       ;;

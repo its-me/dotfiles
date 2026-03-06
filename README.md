@@ -53,8 +53,8 @@
 
 | alias | description |
 | :--- | :--- |
-| `rage e <key_file> <file_to_encrypt> [encrypted_output]` | Encrypt file |
-| `rage d <key_file> <encrypted_file> [output_file]` | Decrypt file |
+| `rage e <key file> <file to encrypt> [encrypted file]` | Encrypt file |
+| `rage d <key file> <file to decrypt> [decrypted file]` | Decrypt file |
 
 ### kopia
 

@@ -109,3 +109,7 @@
 | `f r [args]` | `flutter run [args]` |
 | `f d [args]` | `flutter devices [args]` |
 | `f e [args]` | `flutter emulators [args]` |
+
+---
+
+https://www.chezmoi.io/reference/source-state-attributes/

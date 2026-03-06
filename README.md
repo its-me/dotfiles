@@ -63,6 +63,12 @@
 | `k b` | `sudo kopia snapshot create /etc && kopia snapshot create ~` |
 | `k l` | `sudo kopia snapshot list /etc && kopia snapshot list ~` |
 
+### shred
+
+| alias | description |
+| :--- | :--- |
+| `shred <files or directories>` | Wipe files and directory contents |
+
 ### neovim
 
 | alias | description |

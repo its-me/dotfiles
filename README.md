@@ -67,7 +67,7 @@
 
 | alias | description |
 | :--- | :--- |
-| `shred <files or directories>` | Wipe files and directory contents |
+| `shred <files or directories>` | Wipe content of files and directories |
 
 ### neovim
 

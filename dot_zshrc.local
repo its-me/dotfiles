@@ -61,6 +61,9 @@ compdef _files trash
 
 # shred
 shred() {
+  printf "shred '%s'?\n[y/N] " "$*"
+  read -r reply
+  [ "$reply" = "y" ] || [ "$reply" = "Y" ] || return
   for f in "$@"; do
     if [ -d "$f" ]; then
       find "$f" -type f -exec sh -c 'command shred -u "$1" && echo "shredded file: $1"' _ {} \; && \

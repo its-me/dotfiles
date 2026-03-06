@@ -61,6 +61,19 @@ rmdirp() { find "$1" -type f -exec shred -u {} \; && find "$1" -type d -empty -d
 compdef _files trash
 
 
+# shred
+shred() {
+  for f in "$@"; do
+    if [ -d "$f" ]; then
+      find "$f" -type f -exec sh -c 'command shred -u "$1" && echo "shredded file: $1"' _ {} \; && \
+      find "$f" -type d -empty -delete -print | sed "s/^/deleted directory: /";
+    else
+      command shred -u "$f" && echo "shredded file: $f";
+    fi;
+  done;
+}
+
+
 # paru
 p() {
   if [[ $# -eq 0 ]]; then

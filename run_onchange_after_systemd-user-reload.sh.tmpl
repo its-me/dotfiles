@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# trashy-clean.service hash: {{ include "private_dot_config/systemd/user/trashy-clean.service" | sha256sum }}
+# trashy-clean.timer hash: {{ include "private_dot_config/systemd/user/trashy-clean.timer" | sha256sum }}
+
+systemctl --user daemon-reload
+systemctl --user enable --now trashy-clean.timer

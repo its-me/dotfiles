@@ -147,9 +147,9 @@ rage() {
   _rage_cleanup_key() {
     if [[ $_rage_key_from_op -eq 1 && -f "$_rage_key_file" ]]; then
       if command -v shred &>/dev/null; then
-        shred -u "$_rage_key_file"
+        command shred -u "$_rage_key_file"
       else
-        rm -P "$_rage_key_file" 2>/dev/null || rm -f "$_rage_key_file"
+        echo "Error: Could not find shred, delete $_rage_key_file file"
       fi
     fi
   }

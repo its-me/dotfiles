@@ -1,6 +1,9 @@
 # include secrets
 source ~/.zshrc.local.secrets
 
+# extend path
+export PATH="$HOME/.local/bin:$PATH"
+
 # user completions
 fpath=(~/.zsh/completions $fpath)
 autoload -Uz compinit && compinit

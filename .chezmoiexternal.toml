@@ -1,0 +1,4 @@
+[".local/bin/takeout-merge"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/its-me/google-takeout/main/takeout-merge"
+    executable = true

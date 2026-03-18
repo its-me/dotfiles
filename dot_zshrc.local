@@ -320,6 +320,123 @@ k() {
 }
 
 
+# google takeout
+to() {
+  if [[ $# -eq 0 ]]; then
+    echo "Usage: to b | to r <file>" >&2
+    return 1
+  fi
+
+  local subcmd=$1
+  shift
+
+  local TAKEOUT_AGE_KEY="${TAKEOUT_AGE_KEY}"
+  local TAKEOUT_B2_CLIENT="${TAKEOUT_B2_CLIENT}"
+  local TAKEOUT_B2_BUCKET="${TAKEOUT_B2_BUCKET}"
+
+  case "$subcmd" in
+    b)
+      if [[ -z "$TAKEOUT_AGE_KEY" ]]; then
+        echo "Error: TAKEOUT_AGE_KEY environment variable is not set" >&2
+        return 1
+      fi
+
+      if [[ -z "$TAKEOUT_B2_BUCKET" ]]; then
+        echo "Error: TAKEOUT_B2_BUCKET environment variable is not set" >&2
+        return 1
+      fi
+
+      # ── 1. Merge ──────────────────────────────────────────────────────────
+      echo "[INFO] Running takeout-merge in $(pwd)"
+      takeout-merge || return 1
+
+      local archive
+      archive=$(find . -maxdepth 1 -name "Takeout-*.tar.xz" -o -name "takeout-*.tar.xz" | sort | tail -1)
+      if [[ -z "$archive" ]]; then
+        echo "Error: Could not find output archive from takeout-merge" >&2
+        return 1
+      fi
+      archive="${archive#./}"
+      echo "[INFO] Archive: $archive"
+
+      # ── 2. Encrypt ────────────────────────────────────────────────────────
+      local encrypted="${archive}.age"
+      echo "[INFO] Encrypting → $encrypted"
+      rage e "$TAKEOUT_AGE_KEY" "$archive" "$encrypted" || return 1
+
+      # ── 3. SHA-256 (local) ────────────────────────────────────────────────
+      echo "[INFO] Calculating local sha256sum"
+      local local_sum
+      local_sum=$(sha256sum "$encrypted" | awk '{print $1}')
+      echo "[INFO] Local SHA-256: $local_sum"
+
+      # ── 4. Upload to Backblaze B2 & Google Drive in parallel ──────────────
+      echo "[INFO] Uploading to Backblaze B2 and Google Drive in parallel..."
+      local b2_ok=0 gdrive_ok=0
+
+      $TAKEOUT_B2_CLIENT file upload "$TAKEOUT_B2_BUCKET" "$encrypted" "$encrypted" &
+      local b2_pid=$!
+
+      rclone copy "$encrypted" "drive:Takeout/" --progress &
+      local gdrive_pid=$!
+
+      wait $b2_pid    && b2_ok=1    || echo "Error: Backblaze B2 upload failed" >&2
+      wait $gdrive_pid && gdrive_ok=1 || echo "Error: Google Drive upload failed" >&2
+
+      [[ $b2_ok -eq 0 || $gdrive_ok -eq 0 ]] && return 1
+
+      # ── 5. Verify SHA-256 on both remotes ─────────────────────────────────
+      echo "[INFO] Verifying SHA-256 on remotes..."
+
+      local b2_sum gdrive_sum
+      b2_sum=$($TAKEOUT_B2_CLIENT file info "b2://$TAKEOUT_B2_BUCKET/$encrypted" | jq -r '.fileInfo.sha256_checksum // .contentSha1' 2>/dev/null)
+      gdrive_sum=$(rclone hashsum sha256 "drive:Takeout/$encrypted" | awk '{print $1}')
+
+      echo "[INFO] Local:        $local_sum"
+      echo "[INFO] Backblaze B2: $b2_sum"
+      echo "[INFO] Google Drive: $gdrive_sum"
+
+      if [[ "$local_sum" == "$b2_sum" && "$local_sum" == "$gdrive_sum" ]]; then
+        echo "[INFO] ✓ All checksums match — backup complete"
+      else
+        echo "Error: Checksum mismatch detected!" >&2
+        [[ "$local_sum" != "$b2_sum"     ]] && echo "Error:   B2 mismatch:     $b2_sum" >&2
+        [[ "$local_sum" != "$gdrive_sum" ]] && echo "Error:   GDrive mismatch: $gdrive_sum" >&2
+        return 1
+      fi
+      ;;
+
+    r)
+      local encrypted_file=$1
+      if [[ -z "$encrypted_file" ]]; then
+        echo "Usage: to r <encrypted_file>" >&2
+        return 1
+      fi
+
+      if [[ ! -f "$encrypted_file" ]]; then
+        echo "Error: File not found: $encrypted_file" >&2
+        return 1
+      fi
+
+      # ── 1. Decrypt ────────────────────────────────────────────────────────
+      local decrypted="${encrypted_file%.age}"
+      echo "[INFO] Decrypting $encrypted_file → $decrypted"
+      rage d "$TAKEOUT_AGE_KEY" "$encrypted_file" "$decrypted" || return 1
+
+      # ── 2. Extract ────────────────────────────────────────────────────────
+      echo "[INFO] Extracting $decrypted"
+      atool --extract "$decrypted" || return 1
+      echo "[INFO] ✓ Done"
+      ;;
+
+    *)
+      echo "Usage: to b | to r <file>" >&2
+      return 1
+      ;;
+  esac
+}
+
+
 # neovim
 alias vi='nvim'
 alias vim='nvim'

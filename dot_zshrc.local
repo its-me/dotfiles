@@ -377,7 +377,7 @@ to() {
       $TAKEOUT_B2_CLIENT file upload "$TAKEOUT_B2_BUCKET" "$encrypted" "$encrypted" &
       local b2_pid=$!
 
-      rclone copy "$encrypted" "drive:Takeout/" --progress &
+      rclone copy "$encrypted" "$TAKEOUT_RCLONE_REMOTE_NAME:$TAKEOUT_RCLONE_REMOTE_DIR/" --progress &
       local gdrive_pid=$!
 
       wait $b2_pid    && b2_ok=1    || echo "Error: Backblaze B2 upload failed" >&2
@@ -390,7 +390,7 @@ to() {
 
       local b2_sum gdrive_sum
       b2_sum=$($TAKEOUT_B2_CLIENT file info "b2://$TAKEOUT_B2_BUCKET/$encrypted" | jq -r '.fileInfo.sha256_checksum // .contentSha1' 2>/dev/null)
-      gdrive_sum=$(rclone hashsum sha256 "drive:Takeout/$encrypted" | awk '{print $1}')
+      gdrive_sum=$(rclone hashsum sha256 "$TAKEOUT_RCLONE_REMOTE_NAME:$TAKEOUT_RCLONE_REMOTE_DIR/$encrypted" | awk '{print $1}')
 
       echo "[INFO] Local:        $local_sum"
       echo "[INFO] Backblaze B2: $b2_sum"

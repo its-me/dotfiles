@@ -38,6 +38,10 @@ SAVEHIST=10000
 source /usr/share/nvm/init-nvm.sh
 
 
+# google chrome
+alias chrome=google-chrome-stable
+
+
 # trashy
 rm() {
   if [[ $# -eq 0 ]]; then

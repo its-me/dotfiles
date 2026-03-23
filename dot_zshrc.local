@@ -339,7 +339,6 @@ to() {
   local TAKEOUT_B2_BUCKET="${TAKEOUT_B2_BUCKET}"
   local TAKEOUT_RCLONE_REMOTE_NAME="${TAKEOUT_RCLONE_REMOTE_NAME}"
   local TAKEOUT_RCLONE_REMOTE_DIR="${TAKEOUT_RCLONE_REMOTE_DIR}"
-  local OP_SERVICE_ACCOUNT_TOKEN="${ONEPASSWORD_SERVICE_ACCOUNT_TOKEN}"
 
   case "$subcmd" in
     b)
@@ -369,7 +368,7 @@ to() {
       # ── 2. Encrypt ────────────────────────────────────────────────────────
       local encrypted="${archive}.age"
       echo "[INFO] Encrypting → $encrypted"
-      rage e "$TAKEOUT_AGE_KEY" "$archive" "$encrypted" || return 1
+      OP_SERVICE_ACCOUNT_TOKEN="$ONEPASSWORD_SERVICE_ACCOUNT_TOKEN" rage e "$TAKEOUT_AGE_KEY" "$archive" "$encrypted" || return 1
 
       # ── 3. SHA-1 (local) ──────────────────────────────────────────────────
       echo "[INFO] Calculating local sha1sum"
@@ -429,7 +428,7 @@ to() {
       # ── 1. Decrypt ────────────────────────────────────────────────────────
       local decrypted="${encrypted_file%.age}"
       echo "[INFO] Decrypting $encrypted_file → $decrypted"
-      rage d "$TAKEOUT_AGE_KEY" "$encrypted_file" "$decrypted" || return 1
+      OP_SERVICE_ACCOUNT_TOKEN="$ONEPASSWORD_SERVICE_ACCOUNT_TOKEN" rage d "$TAKEOUT_AGE_KEY" "$encrypted_file" "$decrypted" || return 1
 
       # ── 2. Extract ────────────────────────────────────────────────────────
       echo "[INFO] Extracting $decrypted"

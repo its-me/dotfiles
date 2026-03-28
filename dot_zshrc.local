@@ -289,12 +289,16 @@ k() {
       echo && \
       sudo kopia snapshot create /etc && \
       echo && \
+      sudo kopia snapshot create /root && \
+      echo && \
       kopia snapshot create ~
       echo
       ;;
     l)
       echo && \
       sudo kopia snapshot list /etc && \
+      echo && \
+      sudo kopia snapshot list /root && \
       echo && \
       kopia snapshot list ~
       echo

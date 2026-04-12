@@ -66,6 +66,11 @@ alias rmdir='trashy put'
 compdef _files trash
 
 
+# rm
+alias rmp='command rm'
+alias rmdirp='command rmdir'
+
+
 # shred
 shred() {
   printf "shred '%s'?\n[y/N] " "$*"

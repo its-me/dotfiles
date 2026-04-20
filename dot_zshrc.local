@@ -487,7 +487,7 @@ gb() {
 
       echo "[INFO] Running github-backup → $output_dir"
       github-backup its-me \
-        -f "$(op read "$GITHUB_BACKUP_TOKEN_PATH")" \
+        -f "$(op read "op://$GITHUB_BACKUP_TOKEN_PATH")" \
         -o "$output_dir" \
         --attachments \
         --followers \

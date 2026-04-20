@@ -351,15 +351,11 @@ to() {
 
   case "$subcmd" in
     b)
-      if [[ -z "$TAKEOUT_AGE_KEY" ]]; then
-        echo "Error: TAKEOUT_AGE_KEY environment variable is not set" >&2
-        return 1
-      fi
-
-      if [[ -z "$TAKEOUT_B2_BUCKET" ]]; then
-        echo "Error: TAKEOUT_B2_BUCKET environment variable is not set" >&2
-        return 1
-      fi
+      [[ -z "$TAKEOUT_AGE_KEY"            ]] && { echo "Error: TAKEOUT_AGE_KEY is not set" >&2;            return 1; }
+      [[ -z "$TAKEOUT_B2_CLIENT"          ]] && { echo "Error: TAKEOUT_B2_CLIENT is not set" >&2;          return 1; }
+      [[ -z "$TAKEOUT_B2_BUCKET"          ]] && { echo "Error: TAKEOUT_B2_BUCKET is not set" >&2;          return 1; }
+      [[ -z "$TAKEOUT_RCLONE_REMOTE_NAME" ]] && { echo "Error: TAKEOUT_RCLONE_REMOTE_NAME is not set" >&2; return 1; }
+      [[ -z "$TAKEOUT_RCLONE_REMOTE_DIR"  ]] && { echo "Error: TAKEOUT_RCLONE_REMOTE_DIR is not set" >&2;  return 1; }
 
       # ── 1. Merge ──────────────────────────────────────────────────────────
       echo "[INFO] Running takeout-merge in $(pwd)"

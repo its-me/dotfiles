@@ -478,7 +478,6 @@ gb() {
       [[ -z "$GITHUB_BACKUP_RCLONE_REMOTE_NAME" ]] && { echo "Error: GITHUB_BACKUP_RCLONE_REMOTE_NAME is not set" >&2; return 1; }
       [[ -z "$GITHUB_BACKUP_RCLONE_REMOTE_DIR" ]] && { echo "Error: GITHUB_BACKUP_RCLONE_REMOTE_DIR is not set" >&2; return 1; }
       [[ -z "$GITHUB_BACKUP_TOKEN_PATH"        ]] && { echo "Error: GITHUB_BACKUP_TOKEN_PATH is not set" >&2;        return 1; }
-      [[ -z "$ONEPASSWORD_SERVICE_ACCOUNT_TOKEN" ]] && { echo "Error: ONEPASSWORD_SERVICE_ACCOUNT_TOKEN is not set" >&2; return 1; }
 
       # ── 1. Backup ─────────────────────────────────────────────────────────
       local date_str

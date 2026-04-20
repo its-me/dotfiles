@@ -5,12 +5,13 @@
 [init]
   defaultBranch = main
 [commit]                                                                                    
-  gpgsign = true                                                                             
+  gpgsign = true                                                                            
 [tag]                                                                                       
   gpgSign = true  
 
-#[includeIf "hasconfig:remote.*.url:https://github.com/**"]
-#  path = ~/.gitconfig.github
-
-#[includeIf "hasconfig:remote.*.url:git@github.com:*/**"]
-#  path = ~/.gitconfig.github
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential

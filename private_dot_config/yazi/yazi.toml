@@ -7,6 +7,9 @@ rules = [
   { mime = "message/rfc822", use = "chrome" },
   { name = "*.mhtml", use = "chrome" },
   { name = "*.mht", use = "chrome" },
+  { mime = "text/html", use = "chrome" },
+  { name = "*.html", use = "chrome" },
+  { name = "*.htm", use = "chrome" },
   { mime = "image/*", use = "vui" },
 ]
 

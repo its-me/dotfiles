@@ -1,0 +1,10 @@
+[Unit]
+Description=Shadowsocks-Rust Client Service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/ssservice local --log-without-time -c %h/.config/shadowsocks/%i.json
+
+[Install]
+WantedBy=default.target

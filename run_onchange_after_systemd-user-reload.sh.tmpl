@@ -2,6 +2,11 @@
 
 # trashy-clean.service hash: {{ include "private_dot_config/systemd/user/trashy-clean.service" | sha256sum }}
 # trashy-clean.timer hash: {{ include "private_dot_config/systemd/user/trashy-clean.timer" | sha256sum }}
+# shadowsocks@.service hash: {{ include "private_dot_config/systemd/user/shadowsocks-rust@.service" | sha256sum }}
+# germany.json hash: {{ include "private_dot_config/shadowsocks/encrypted_germany.json.age" | sha256sum }}
+# finland.json hash: {{ include "private_dot_config/shadowsocks/encrypted_finland.json.age" | sha256sum }}
 
 systemctl --user daemon-reload
 systemctl --user enable --now trashy-clean.timer
+systemctl --user enable --now shadowsocks-rust@germany.service
+systemctl --user enable --now shadowsocks-rust@finland.service

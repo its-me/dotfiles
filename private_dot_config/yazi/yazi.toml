@@ -10,12 +10,29 @@ rules = [
   { mime = "text/html", use = "chrome" },
   { name = "*.html", use = "chrome" },
   { name = "*.htm", use = "chrome" },
+  { mime = "video/mp4", use = "mpv" },
+  { name = "*.mp4", use = "mpv" },
+  { mime = "video/x-matroska", use = "mpv" },
+  { name = "*.mkv", use = "mpv" },
+  { mime = "video/x-msvideo", use = "mpv" },
+  { name = "*.avi", use = "mpv" },
+  { mime = "video/quicktime", use = "mpv" },
+  { name = "*.mov", use = "mpv" },
+  { mime = "video/webm", use = "mpv" },
+  { name = "*.webm", use = "mpv" },
+  { mime = "video/x-flv", use = "mpv" },
+  { name = "*.flv", use = "mpv" },
+  { mime = "video/x-ms-wmv", use = "mpv" },
+  { name = "*.wmv", use = "mpv" },
   { mime = "image/*", use = "vui" },
 ]
 
 [opener]
 chrome = [
   { run = 'google-chrome-stable "$@"', orphan = true, desc = "Open in Chrome" }
+]
+mpv = [
+  { run = 'mpv "$@"', orphan = true, desc = "Play in mpv" }
 ]
 vui = [
   { run = 'viu "$1"', desc = "viu", block = true }

@@ -348,20 +348,20 @@ gb() {
   shift
 
   local GITHUB_BACKUP_AGE_KEY="${GITHUB_BACKUP_AGE_KEY}"
-  local GITHUB_BACKUP_B2_CLIENT="${GITHUB_BACKUP_B2_CLIENT}"
-  local GITHUB_BACKUP_B2_BUCKET="${GITHUB_BACKUP_B2_BUCKET}"
-  local GITHUB_BACKUP_RCLONE_REMOTE_NAME="${GITHUB_BACKUP_RCLONE_REMOTE_NAME}"
-  local GITHUB_BACKUP_RCLONE_REMOTE_DIR="${GITHUB_BACKUP_RCLONE_REMOTE_DIR}"
+  local GITHUB_BACKUP_RCLONE_B2_REMOTE_NAME="${GITHUB_BACKUP_RCLONE_B2_REMOTE_NAME}"
+  local GITHUB_BACKUP_RCLONE_B2_REMOTE_BUCKET="${GITHUB_BACKUP_RCLONE_B2_REMOTE_BUCKET}"
+  local GITHUB_BACKUP_RCLONE_DRIVE_REMOTE_NAME="${GITHUB_BACKUP_RCLONE_DRIVE_REMOTE_NAME}"
+  local GITHUB_BACKUP_RCLONE_DRIVE_REMOTE_DIR="${GITHUB_BACKUP_RCLONE_DRIVE_REMOTE_DIR}"
   local GITHUB_BACKUP_TOKEN_PATH="${GITHUB_BACKUP_TOKEN_PATH}"
 
   case "$subcmd" in
     b)
-      [[ -z "$GITHUB_BACKUP_AGE_KEY"           ]] && { echo "Error: GITHUB_BACKUP_AGE_KEY is not set" >&2;           return 1; }
-      [[ -z "$GITHUB_BACKUP_B2_CLIENT"         ]] && { echo "Error: GITHUB_BACKUP_B2_CLIENT is not set" >&2;         return 1; }
-      [[ -z "$GITHUB_BACKUP_B2_BUCKET"         ]] && { echo "Error: GITHUB_BACKUP_B2_BUCKET is not set" >&2;         return 1; }
-      [[ -z "$GITHUB_BACKUP_RCLONE_REMOTE_NAME" ]] && { echo "Error: GITHUB_BACKUP_RCLONE_REMOTE_NAME is not set" >&2; return 1; }
-      [[ -z "$GITHUB_BACKUP_RCLONE_REMOTE_DIR" ]] && { echo "Error: GITHUB_BACKUP_RCLONE_REMOTE_DIR is not set" >&2; return 1; }
-      [[ -z "$GITHUB_BACKUP_TOKEN_PATH"        ]] && { echo "Error: GITHUB_BACKUP_TOKEN_PATH is not set" >&2;        return 1; }
+      [[ -z "$GITHUB_BACKUP_AGE_KEY"                   ]] && { echo "Error: GITHUB_BACKUP_AGE_KEY is not set" >&2;                   return 1; }
+      [[ -z "$GITHUB_BACKUP_RCLONE_B2_REMOTE_NAME"     ]] && { echo "Error: GITHUB_BACKUP_RCLONE_B2_REMOTE_NAME is not set" >&2;     return 1; }
+      [[ -z "$GITHUB_BACKUP_RCLONE_B2_REMOTE_BUCKET"   ]] && { echo "Error: GITHUB_BACKUP_RCLONE_B2_REMOTE_BUCKET is not set" >&2;   return 1; }
+      [[ -z "$GITHUB_BACKUP_RCLONE_DRIVE_REMOTE_NAME"  ]] && { echo "Error: GITHUB_BACKUP_RCLONE_DRIVE_REMOTE_NAME is not set" >&2;  return 1; }
+      [[ -z "$GITHUB_BACKUP_RCLONE_DRIVE_REMOTE_DIR"   ]] && { echo "Error: GITHUB_BACKUP_RCLONE_DRIVE_REMOTE_DIR is not set" >&2;   return 1; }
+      [[ -z "$GITHUB_BACKUP_TOKEN_PATH"                ]] && { echo "Error: GITHUB_BACKUP_TOKEN_PATH is not set" >&2;                return 1; }
 
       # ── 1. Backup ─────────────────────────────────────────────────────────
       local date_str
@@ -415,25 +415,19 @@ gb() {
       # ── 5. Upload to Backblaze B2 & Google Drive in parallel ──────────────
       echo "[INFO] Uploading to Backblaze B2 and Google Drive in parallel..."
 
-      local b2_json
-      b2_json=$($GITHUB_BACKUP_B2_CLIENT file upload "$GITHUB_BACKUP_B2_BUCKET" "$encrypted" "$encrypted" 2>&1)
-      local b2_exit=$?
-      echo "$b2_json"
-      if [[ $b2_exit -ne 0 ]]; then
-        echo "Error: Backblaze B2 upload failed" >&2
-        return 1
-      fi
-      local b2_sha1
-      b2_sha1=$(echo "$b2_json" | awk 'BEGIN{d=0} /{/{d++} d>0{print} /}/{d--}' | jq -r '.fileInfo.large_file_sha1 // .contentSha1')
-
-      rclone copy "$encrypted" "$GITHUB_BACKUP_RCLONE_REMOTE_NAME:$GITHUB_BACKUP_RCLONE_REMOTE_DIR/" --progress &
+      rclone copy "$encrypted" "$GITHUB_BACKUP_RCLONE_B2_REMOTE_NAME:$GITHUB_BACKUP_RCLONE_B2_REMOTE_BUCKET/" --progress &
+      local b2_pid=$!
+      rclone copy "$encrypted" "$GITHUB_BACKUP_RCLONE_DRIVE_REMOTE_NAME:$GITHUB_BACKUP_RCLONE_DRIVE_REMOTE_DIR/" --progress &
       local gdrive_pid=$!
+      wait $b2_pid     || { echo "Error: Backblaze B2 upload failed" >&2;   return 1; }
       wait $gdrive_pid || { echo "Error: Google Drive upload failed" >&2; return 1; }
 
       # ── 6. Verify checksums ───────────────────────────────────────────────
       echo "[INFO] Verifying checksums on remotes..."
+      local b2_sha1
+      b2_sha1=$(rclone hashsum sha1 "$GITHUB_BACKUP_RCLONE_B2_REMOTE_NAME:$GITHUB_BACKUP_RCLONE_B2_REMOTE_BUCKET/$encrypted" | awk '{print $1}')
       local gdrive_sha1
-      gdrive_sha1=$(rclone hashsum sha1 "$GITHUB_BACKUP_RCLONE_REMOTE_NAME:$GITHUB_BACKUP_RCLONE_REMOTE_DIR/$encrypted" | awk '{print $1}')
+      gdrive_sha1=$(rclone hashsum sha1 "$GITHUB_BACKUP_RCLONE_DRIVE_REMOTE_NAME:$GITHUB_BACKUP_RCLONE_DRIVE_REMOTE_DIR/$encrypted" | awk '{print $1}')
 
       echo "[INFO] Local SHA-1:        $local_sha1"
       echo "[INFO] Backblaze B2 SHA-1: $b2_sha1"

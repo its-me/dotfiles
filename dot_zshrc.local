@@ -352,7 +352,7 @@ gb() {
   local GITHUB_BACKUP_RCLONE_B2_REMOTE_BUCKET="${GITHUB_BACKUP_RCLONE_B2_REMOTE_BUCKET}"
   local GITHUB_BACKUP_RCLONE_DRIVE_REMOTE_NAME="${GITHUB_BACKUP_RCLONE_DRIVE_REMOTE_NAME}"
   local GITHUB_BACKUP_RCLONE_DRIVE_REMOTE_DIR="${GITHUB_BACKUP_RCLONE_DRIVE_REMOTE_DIR}"
-  local GITHUB_BACKUP_TOKEN_PATH="${GITHUB_BACKUP_TOKEN_PATH}"
+  local GITHUB_BACKUP_TOKEN_ONEPASSWORD_PATH="${GITHUB_BACKUP_TOKEN_ONEPASSWORD_PATH}"
 
   case "$subcmd" in
     b)
@@ -361,7 +361,7 @@ gb() {
       [[ -z "$GITHUB_BACKUP_RCLONE_B2_REMOTE_BUCKET"   ]] && { echo "Error: GITHUB_BACKUP_RCLONE_B2_REMOTE_BUCKET is not set" >&2;   return 1; }
       [[ -z "$GITHUB_BACKUP_RCLONE_DRIVE_REMOTE_NAME"  ]] && { echo "Error: GITHUB_BACKUP_RCLONE_DRIVE_REMOTE_NAME is not set" >&2;  return 1; }
       [[ -z "$GITHUB_BACKUP_RCLONE_DRIVE_REMOTE_DIR"   ]] && { echo "Error: GITHUB_BACKUP_RCLONE_DRIVE_REMOTE_DIR is not set" >&2;   return 1; }
-      [[ -z "$GITHUB_BACKUP_TOKEN_PATH"                ]] && { echo "Error: GITHUB_BACKUP_TOKEN_PATH is not set" >&2;                return 1; }
+      [[ -z "$GITHUB_BACKUP_TOKEN_ONEPASSWORD_PATH"                ]] && { echo "Error: GITHUB_BACKUP_TOKEN_ONEPASSWORD_PATH is not set" >&2;                return 1; }
 
       # ── 1. Backup ─────────────────────────────────────────────────────────
       local date_str
@@ -370,7 +370,7 @@ gb() {
 
       echo "[INFO] Running github-backup → $output_dir"
       github-backup its-me \
-        -f "$(op read "op://$GITHUB_BACKUP_TOKEN_PATH")" \
+        -f "$(op read "op://$GITHUB_BACKUP_TOKEN_ONEPASSWORD_PATH")" \
         -o "$output_dir" \
         --attachments \
         --followers \

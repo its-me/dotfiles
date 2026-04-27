@@ -7,3 +7,8 @@
     type = "file"
     url = "https://raw.githubusercontent.com/its-me/google-takeout/main/takeout"
     executable = true
+
+[".local/bin/takeout-retention"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/its-me/google-takeout/main/takeout-retention"
+    executable = true

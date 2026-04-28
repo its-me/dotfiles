@@ -12,3 +12,8 @@
     type = "file"
     url = "https://raw.githubusercontent.com/its-me/google-takeout/main/takeout-retention"
     executable = true
+
+[".local/bin/takeout-upload"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/its-me/google-takeout/main/takeout-upload"
+    executable = true

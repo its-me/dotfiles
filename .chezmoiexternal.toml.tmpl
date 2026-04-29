@@ -1,0 +1,8 @@
+{{- $googleTakeoutVersion := "v0.1.0" -}}
+
+[".local/bin"]
+    type = "archive"
+    url = "https://github.com/its-me/google-takeout/archive/refs/tags/{{ $googleTakeoutVersion }}.tar.gz"
+    stripComponents = 1
+    executable = true
+    exclude = ["*/.*", "*/CLAUDE.md", "*/LICENSE*", "*/README*"]

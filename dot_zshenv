@@ -21,3 +21,7 @@ export PATH="$PATH":"$HOME/.pub-cache/bin"
 
 # neovim
 export EDITOR='nvim'
+
+# google-takeout
+export TAKEOUT_RCLONE_UNION_REMOTE_NAME=takeout
+export TAKEOUT_RETENTION_KEEP_LAST=3

@@ -348,20 +348,14 @@ gb() {
   shift
 
   local GITHUB_BACKUP_AGE_KEY="${GITHUB_BACKUP_AGE_KEY}"
-  local GITHUB_BACKUP_RCLONE_B2_REMOTE_NAME="${GITHUB_BACKUP_RCLONE_B2_REMOTE_NAME}"
-  local GITHUB_BACKUP_RCLONE_B2_REMOTE_BUCKET="${GITHUB_BACKUP_RCLONE_B2_REMOTE_BUCKET}"
-  local GITHUB_BACKUP_RCLONE_DRIVE_REMOTE_NAME="${GITHUB_BACKUP_RCLONE_DRIVE_REMOTE_NAME}"
-  local GITHUB_BACKUP_RCLONE_DRIVE_REMOTE_DIR="${GITHUB_BACKUP_RCLONE_DRIVE_REMOTE_DIR}"
+  local GITHUB_BACKUP_RCLONE_UNION_REMOTE_NAME="${GITHUB_BACKUP_RCLONE_UNION_REMOTE_NAME}"
   local GITHUB_BACKUP_TOKEN_ONEPASSWORD_PATH="${GITHUB_BACKUP_TOKEN_ONEPASSWORD_PATH}"
 
   case "$subcmd" in
     b)
-      [[ -z "$GITHUB_BACKUP_AGE_KEY"                   ]] && { echo "Error: GITHUB_BACKUP_AGE_KEY is not set" >&2;                   return 1; }
-      [[ -z "$GITHUB_BACKUP_RCLONE_B2_REMOTE_NAME"     ]] && { echo "Error: GITHUB_BACKUP_RCLONE_B2_REMOTE_NAME is not set" >&2;     return 1; }
-      [[ -z "$GITHUB_BACKUP_RCLONE_B2_REMOTE_BUCKET"   ]] && { echo "Error: GITHUB_BACKUP_RCLONE_B2_REMOTE_BUCKET is not set" >&2;   return 1; }
-      [[ -z "$GITHUB_BACKUP_RCLONE_DRIVE_REMOTE_NAME"  ]] && { echo "Error: GITHUB_BACKUP_RCLONE_DRIVE_REMOTE_NAME is not set" >&2;  return 1; }
-      [[ -z "$GITHUB_BACKUP_RCLONE_DRIVE_REMOTE_DIR"   ]] && { echo "Error: GITHUB_BACKUP_RCLONE_DRIVE_REMOTE_DIR is not set" >&2;   return 1; }
-      [[ -z "$GITHUB_BACKUP_TOKEN_ONEPASSWORD_PATH"                ]] && { echo "Error: GITHUB_BACKUP_TOKEN_ONEPASSWORD_PATH is not set" >&2;                return 1; }
+      [[ -z "$GITHUB_BACKUP_AGE_KEY"                      ]] && { echo "Error: GITHUB_BACKUP_AGE_KEY is not set" >&2;                      return 1; }
+      [[ -z "$GITHUB_BACKUP_RCLONE_UNION_REMOTE_NAME"     ]] && { echo "Error: GITHUB_BACKUP_RCLONE_UNION_REMOTE_NAME is not set" >&2;     return 1; }
+      [[ -z "$GITHUB_BACKUP_TOKEN_ONEPASSWORD_PATH"        ]] && { echo "Error: GITHUB_BACKUP_TOKEN_ONEPASSWORD_PATH is not set" >&2;        return 1; }
 
       # ── 1. Backup ─────────────────────────────────────────────────────────
       local date_str
@@ -412,35 +406,29 @@ gb() {
       local_sha1=$(sha1sum "$encrypted" | awk '{print $1}')
       echo "[INFO] Local SHA-1: $local_sha1"
 
-      # ── 5. Upload to Backblaze B2 & Google Drive in parallel ──────────────
-      echo "[INFO] Uploading to Backblaze B2 and Google Drive in parallel..."
+      # ── 5. Upload via union remote ────────────────────────────────────────
+      local union="${GITHUB_BACKUP_RCLONE_UNION_REMOTE_NAME}:"
+      echo "[INFO] Uploading to $union..."
+      rclone copy "$encrypted" "$union" --progress || return 1
 
-      rclone copy "$encrypted" "$GITHUB_BACKUP_RCLONE_B2_REMOTE_NAME:$GITHUB_BACKUP_RCLONE_B2_REMOTE_BUCKET/" --progress &
-      local b2_pid=$!
-      rclone copy "$encrypted" "$GITHUB_BACKUP_RCLONE_DRIVE_REMOTE_NAME:$GITHUB_BACKUP_RCLONE_DRIVE_REMOTE_DIR/" --progress &
-      local gdrive_pid=$!
-      wait $b2_pid     || { echo "Error: Backblaze B2 upload failed" >&2;   return 1; }
-      wait $gdrive_pid || { echo "Error: Google Drive upload failed" >&2; return 1; }
+      # ── 6. Verify checksums on each upstream ──────────────────────────────
+      echo "[INFO] Verifying checksums on each upstream..."
+      local upstreams_str upstreams upstream_sha1 all_ok=true
+      upstreams_str=$(rclone config show "$GITHUB_BACKUP_RCLONE_UNION_REMOTE_NAME" | awk -F' = ' '/^upstreams/{print $2}')
+      read -ra upstreams <<< "$upstreams_str"
 
-      # ── 6. Verify checksums ───────────────────────────────────────────────
-      echo "[INFO] Verifying checksums on remotes..."
-      local b2_sha1
-      b2_sha1=$(rclone hashsum sha1 "$GITHUB_BACKUP_RCLONE_B2_REMOTE_NAME:$GITHUB_BACKUP_RCLONE_B2_REMOTE_BUCKET/$encrypted" | awk '{print $1}')
-      local gdrive_sha1
-      gdrive_sha1=$(rclone hashsum sha1 "$GITHUB_BACKUP_RCLONE_DRIVE_REMOTE_NAME:$GITHUB_BACKUP_RCLONE_DRIVE_REMOTE_DIR/$encrypted" | awk '{print $1}')
+      echo "[INFO] Local SHA-1: $local_sha1"
+      for upstream in "${upstreams[@]}"; do
+        upstream_sha1=$(rclone hashsum sha1 "${upstream%/}/$encrypted" | awk '{print $1}')
+        echo "[INFO] ${upstream} SHA-1: $upstream_sha1"
+        if [[ "$local_sha1" != "$upstream_sha1" ]]; then
+          echo "Error: Checksum mismatch on ${upstream}!" >&2
+          all_ok=false
+        fi
+      done
 
-      echo "[INFO] Local SHA-1:        $local_sha1"
-      echo "[INFO] Backblaze B2 SHA-1: $b2_sha1"
-      echo "[INFO] Google Drive SHA-1: $gdrive_sha1"
-
-      if [[ "$local_sha1" == "$b2_sha1" && "$local_sha1" == "$gdrive_sha1" ]]; then
-        echo "[INFO] ✓ All checksums match — backup complete"
-      else
-        echo "Error: Checksum mismatch detected!" >&2
-        [[ "$local_sha1" != "$b2_sha1"     ]] && echo "Error:   B2 mismatch:     $b2_sha1" >&2
-        [[ "$local_sha1" != "$gdrive_sha1" ]] && echo "Error:   GDrive mismatch: $gdrive_sha1" >&2
-        return 1
-      fi
+      $all_ok || return 1
+      echo "[INFO] ✓ All checksums match — backup complete"
       ;;
 
     r)

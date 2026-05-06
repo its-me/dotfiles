@@ -413,9 +413,10 @@ gb() {
 
       # ── 6. Verify checksums on each upstream ──────────────────────────────
       echo "[INFO] Verifying checksums on each upstream..."
-      local upstreams_str upstreams upstream_sha1 all_ok=true
+      local upstreams_str upstream_sha1 all_ok=true
+      local -a upstreams
       upstreams_str=$(rclone config show "$GITHUB_BACKUP_RCLONE_UNION_REMOTE_NAME" | awk -F' = ' '/^upstreams/{print $2}')
-      read -ra upstreams <<< "$upstreams_str"
+      upstreams=(${=upstreams_str})
 
       echo "[INFO] Local SHA-1: $local_sha1"
       for upstream in "${upstreams[@]}"; do

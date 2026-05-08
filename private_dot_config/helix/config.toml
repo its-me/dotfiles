@@ -1,0 +1,4 @@
+# https://github.com/helix-editor/helix/pull/14356
+[theme]
+dark = "ayu_dark"
+light = "ayu_light"

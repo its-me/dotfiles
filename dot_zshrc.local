@@ -487,7 +487,13 @@ nvim() {
 
 
 # helix
-alias hx='helix'
+hx() {
+  if command -v helix &>/dev/null; then
+    helix "$@"
+  else
+    command hx "$@"
+  fi
+}
 
 
 # git

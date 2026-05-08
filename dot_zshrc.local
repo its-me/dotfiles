@@ -486,6 +486,10 @@ nvim() {
 }
 
 
+# helix
+alias hx='helix'
+
+
 # git
 g() {
   if [[ $# -eq 0 ]]; then

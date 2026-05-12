@@ -459,8 +459,6 @@ gb() {
 
 
 # neovim
-alias vi='nvim'
-alias vim='nvim'
 nvim() {
   if [[ $# -eq 0 ]]; then
     command nvim
@@ -482,6 +480,8 @@ nvim() {
 
 
 # helix
+alias vi='hx'
+alias vim='hx'
 hx() {
   if command -v helix &>/dev/null; then
     helix "$@"

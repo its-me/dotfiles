@@ -1,6 +1,12 @@
 # include secrets
 source ~/.zshenv.secrets
 
+# extend path
+export PATH="$HOME/.local/bin:$PATH"
+
+# 1Password SSH agent
+export SSH_AUTH_SOCK=~/.1password/agent.sock
+
 # browser
 if [ -n "$DISPLAY" ]; then
     BROWSER='google-chrome-stable'

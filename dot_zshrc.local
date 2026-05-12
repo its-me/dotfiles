@@ -1,18 +1,12 @@
 # include secrets
 source ~/.zshrc.local.secrets
 
-# extend path
-export PATH="$HOME/.local/bin:$PATH"
-
 # user completions
 fpath=(~/.zsh/completions $fpath)
 autoload -Uz compinit && compinit
   
 # 1password cli completion
 eval "$(op completion zsh)"; compdef _op op
-
-# 1Password SSH agent
-export SSH_AUTH_SOCK=~/.1password/agent.sock
 
 # hstr configuration - add this to ~/.zshrc
 alias hh=hstr                    # hh to be alias for hstr

@@ -37,3 +37,12 @@ mpv = [
 vui = [
   { run = 'viu "$1"', desc = "viu", block = true }
 ]
+
+[plugin]
+prepend_previewers = [
+    { url = "*.csv", run = 'piper -- rich -j --left --guides --line-numbers --force-terminal "$1"' },
+    { url = "*.md", run = 'piper -- rich -j --left --guides --line-numbers --force-terminal "$1"' },
+    { url = "*.rst", run = 'piper -- rich -j --left --guides --line-numbers --force-terminal "$1"' },
+    { url = "*.ipynb", run = 'piper -- rich -j --left --guides --line-numbers --force-terminal "$1"' },
+    { url = "*.json", run = 'piper -- rich -j --left --guides --line-numbers --force-terminal "$1"' },
+]

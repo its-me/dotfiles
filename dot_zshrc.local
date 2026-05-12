@@ -28,10 +28,6 @@ HISTSIZE=10000
 SAVEHIST=10000
 
 
-# nvm
-source /usr/share/nvm/init-nvm.sh
-
-
 # google chrome
 alias chrome=google-chrome-stable
 

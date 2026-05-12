@@ -25,8 +25,8 @@ export CHROME_EXECUTABLE=/opt/google/chrome/chrome
 # flutterflow
 export PATH="$PATH":"$HOME/.pub-cache/bin"
 
-# neovim
-export EDITOR='nvim'
+# helix
+export EDITOR='hx'
 
 # google-takeout
 export TAKEOUT_RCLONE_UNION_REMOTE_NAME=takeout

@@ -458,27 +458,6 @@ gb() {
 }
 
 
-# neovim
-nvim() {
-  if [[ $# -eq 0 ]]; then
-    command nvim
-    return
-  fi
-
-  local subcmd=$1
-  shift
-
-  case "$subcmd" in
-    u)
-      command nvim --headless -c "Lazy! sync" +qa
-      ;;
-    *)
-      command nvim "$subcmd" "$@"
-      ;;
-  esac
-}
-
-
 # helix
 alias vi='hx'
 alias vim='hx'

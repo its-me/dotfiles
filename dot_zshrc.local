@@ -29,6 +29,7 @@ SAVEHIST=10000
 
 
 # core
+alias cat='bat --style="plain" --paging="never"'
 alias less='bat --style="plain"'
 alias bat='bat --style="-grid"'
 

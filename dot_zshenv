@@ -22,7 +22,7 @@ export PATH=$PATH:$ANDROID_HOME/emulator
 export PATH=$HOME/flutter/bin:$PATH
 export CHROME_EXECUTABLE=/opt/google/chrome/chrome
 
- helix
+# helix
 export EDITOR='hx'
 
 # google-takeout

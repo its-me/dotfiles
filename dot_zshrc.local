@@ -83,6 +83,25 @@ shred() {
 }
 
 
+# arch
+arch() {
+  if [[ $# -eq 0 ]]; then
+    echo "Usage: arch <subcommand>"
+    echo "  reflector  update mirrorlist (fastest 32)"
+    return
+  fi
+
+  local subcmd=$1
+  shift
+
+  case "$subcmd" in
+    reflector)
+      sudo reflector --fastest 32 --save /etc/pacman.d/mirrorlist
+      ;;
+  esac
+}
+
+
 # paru
 p() {
   if [[ $# -eq 0 ]]; then

@@ -1,3 +1,9 @@
+# dotfiles
+
+Dotfiles for my desktop environment based on [Arch Linux](https://archlinux.org).
+
+---
+
 ## software
 
 ### desktop

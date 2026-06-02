@@ -595,3 +595,151 @@ f() {
       ;;
   esac
 }
+
+
+# aliases help
+a() {
+  if [[ $# -eq 0 ]]; then
+    echo "Available aliases (run 'a <alias>' for details):"
+    echo ""
+    echo "  cat               bat, plain style, no paging"
+    echo "  less              bat, plain style, with paging"
+    echo "  bat               bat, no grid"
+    echo "  chrome            google-chrome-stable"
+    echo "  hh                hstr (interactive history search)"
+    echo "  vi, vim           helix editor"
+    echo "  to                takeout (Google Takeout utility)"
+    echo ""
+    echo "  rm  [flags] <files>       trash files via trashy"
+    echo "  rmdir <dir>               trash directory via trashy"
+    echo "  rmp <files>               permanently remove files (real rm)"
+    echo "  rmdirp <dir>              permanently remove directory (real rmdir)"
+    echo ""
+    echo "  shred <files>             securely wipe files and directories"
+    echo ""
+    echo "  arch <subcommand>         Arch Linux utilities"
+    echo "  cz <subcommand>           chezmoi"
+    echo "  d <subcommand>            docker"
+    echo "  f <subcommand>            flutter"
+    echo "  g <subcommand>            git"
+    echo "  gb <subcommand>           GitHub backup"
+    echo "  k <subcommand>            kopia"
+    echo "  p <subcommand>            paru"
+    echo "  rage <subcommand>         rage encryption"
+    return
+  fi
+
+  case "$1" in
+    a)
+      echo "a                     show all aliases"
+      echo "a <alias>             show help for a specific alias"
+      ;;
+    cat)
+      echo "cat <file>            bat --style=plain --paging=never"
+      ;;
+    less)
+      echo "less <file>           bat --style=plain (with paging)"
+      ;;
+    bat)
+      echo "bat <file>            bat --style=-grid"
+      ;;
+    chrome)
+      echo "chrome                google-chrome-stable"
+      ;;
+    hh)
+      echo "hh                    hstr (interactive history search, also bound to Ctrl+R)"
+      ;;
+    vi|vim)
+      echo "vi, vim               helix editor"
+      ;;
+    to)
+      echo "to                    takeout (Google Takeout utility)"
+      ;;
+    rm)
+      echo "rm [flags] <files>    trash files via trashy (use rmp for permanent removal)"
+      ;;
+    rmdir)
+      echo "rmdir <dir>           trash directory via trashy"
+      ;;
+    rmp)
+      echo "rmp <files>           permanently remove files (real rm)"
+      ;;
+    rmdirp)
+      echo "rmdirp <dir>          permanently remove directory (real rmdir)"
+      ;;
+    shred)
+      echo "shred <files>         securely wipe files and directories (prompts for confirmation)"
+      ;;
+    arch)
+      echo "arch <subcommand>     Arch Linux utilities"
+      echo "  reflector           update pacman mirrorlist (fastest 32 mirrors)"
+      ;;
+    cz)
+      echo "cz <subcommand>       chezmoi"
+      echo "  s                   chezmoi status"
+      echo "  e <file>            chezmoi edit <file>"
+      echo "  d                   chezmoi diff"
+      echo "  a                   chezmoi apply -v"
+      echo "  c <msg>             git add . && commit -m <msg>"
+      echo "  p                   git push"
+      echo "  cp <msg>            git add . && commit -m <msg> && push"
+      echo "  g [args]            chezmoi git [args]"
+      echo "  g s                 chezmoi git status"
+      echo "  g l                 chezmoi git log"
+      ;;
+    d)
+      echo "d <subcommand>        docker"
+      echo "  b <args>            docker build <args>"
+      echo "  i [args]            docker images --all [args]"
+      echo "  r <args>            docker rm <args>"
+      echo "  ri <args>           docker rmi <args>"
+      echo "  s <args>            docker stop <args>"
+      echo "  sr <args>           docker stop <args> && docker rm <args>"
+      ;;
+    f)
+      echo "f <subcommand>        flutter"
+      echo "  b <args>            flutter build <args>"
+      echo "  c [args]            flutter clean [args]"
+      echo "  r [args]            flutter run [args]"
+      echo "  d [args]            flutter devices [args]"
+      echo "  e [args]            flutter emulators [args]"
+      ;;
+    g)
+      echo "g <subcommand>        git"
+      echo "  a <files>           git add <files>"
+      echo "  c <msg>             git commit -a -m <msg>"
+      echo "  p                   git push"
+      echo "  cp <msg>            git commit -a -m <msg> && push"
+      echo "  l                   git log"
+      echo "  s                   git status"
+      ;;
+    gb)
+      echo "gb <subcommand>       GitHub backup"
+      echo "  b                   create backup, archive, encrypt, and upload"
+      echo "  r <file>            decrypt and extract a backup file"
+      ;;
+    k)
+      echo "k <subcommand>        kopia"
+      echo "  b                   snapshot create /etc /root ~"
+      echo "  l                   snapshot list /etc /root ~"
+      echo "  s <id> [filter]     list snapshot contents (optionally filtered)"
+      ;;
+    p)
+      echo "p <subcommand>        paru (runs paru -Syu with no arguments)"
+      echo "  i <packages>        paru -S <packages>"
+      echo "  id <packages>       paru -S --asdeps <packages>"
+      echo "  u <packages>        paru -Rus <packages>"
+      echo "  q [packages]        paru -Qi [packages]"
+      ;;
+    rage)
+      echo "rage <subcommand>"
+      echo "  e <key> <file> [out]    encrypt file (key can be a 1Password document name)"
+      echo "  d <key> <file> [out]    decrypt file (key can be a 1Password document name)"
+      ;;
+    *)
+      echo "Unknown alias: $1" >&2
+      echo "Run 'a' to see all available aliases" >&2
+      return 1
+      ;;
+  esac
+}

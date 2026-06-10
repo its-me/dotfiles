@@ -1,6 +1,6 @@
 # dotfiles
 
-Dotfiles for my desktop environment based on [Arch Linux](https://archlinux.org).
+Dotfiles for my desktop environment based on [Arch Linux](https://archlinux.org), managed with [chezmoi](https://chezmoi.io).
 
 ---
 

@@ -87,7 +87,8 @@ shred() {
 arch() {
   if [[ $# -eq 0 ]]; then
     echo "Usage: arch <subcommand>"
-    echo "  reflector  update mirrorlist (fastest 32)"
+    echo "  reflector           update mirrorlist (fastest 32)"
+    echo "  aur <package>       install latest release from its-me/aur.<package>"
     return
   fi
 
@@ -97,6 +98,39 @@ arch() {
   case "$subcmd" in
     reflector)
       sudo reflector --fastest 32 --save /etc/pacman.d/mirrorlist
+      ;;
+    aur)
+      local package=$1
+      if [[ -z "$package" ]]; then
+        echo "Usage: arch aur <package>" >&2
+        return 1
+      fi
+
+      local repo="its-me/aur.$package"
+      echo "Fetching latest release for $repo..."
+
+      local download_url
+      download_url=$(curl -s "https://api.github.com/repos/$repo/releases/latest" \
+        | grep '"browser_download_url"' \
+        | grep '\.pkg\.tar\.' \
+        | sed 's/.*"browser_download_url": "\(.*\)".*/\1/')
+
+      if [[ -z "$download_url" ]]; then
+        echo "Error: could not find a package asset in the latest release of $repo" >&2
+        return 1
+      fi
+
+      local pkg_file="/tmp/${download_url:t}"
+      echo "Downloading ${download_url:t}..."
+      curl -sL "$download_url" -o "$pkg_file" || {
+        echo "Error: failed to download $download_url" >&2
+        return 1
+      }
+
+      paru -U "$pkg_file"
+      local exit_code=$?
+      command rm -f "$pkg_file"
+      return $exit_code
       ;;
   esac
 }
@@ -673,6 +707,7 @@ a() {
     arch)
       echo "arch <subcommand>     Arch Linux utilities"
       echo "  reflector           update pacman mirrorlist (fastest 32 mirrors)"
+      echo "  aur <package>       install latest release from its-me/aur.<package>"
       ;;
     cz)
       echo "cz <subcommand>       chezmoi"

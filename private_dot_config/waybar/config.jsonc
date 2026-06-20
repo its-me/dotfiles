@@ -40,7 +40,7 @@
     "custom/claude": {
         "format": "{}",
         "interval": 60,
-        "exec": "claude-usage --waybar",
+        "exec": "~/.config/waybar/claude_usage.sh",
         "return-type": "json",
         "exec-if": "command -v claude-usage",
         "signal": 9,

@@ -12,6 +12,7 @@
     "modules-right": [
         "idle_inhibitor",
         "custom/updates",
+        "custom/claude",
         "load",
         "cpu",
         "memory",
@@ -35,6 +36,15 @@
             "activated": " ",
             "deactivated": " "
         }
+    },
+    "custom/claude": {
+        "format": "{}",
+        "interval": 60,
+        "exec": "claude-usage --waybar",
+        "return-type": "json",
+        "exec-if": "command -v claude-usage",
+        "signal": 9,
+        "on-click": "pkill -SIGRTMIN+9 waybar"
     },
     "custom/updates": {
       "format": "{}",

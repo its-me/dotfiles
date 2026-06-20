@@ -37,3 +37,12 @@
   padding-left: 1em
 }
 
+#custom-claude {
+    padding-left: 1em;
+}
+
+#custom-claude.green  { color: #aaffaa; }
+#custom-claude.yellow { color: #ffee88; }
+#custom-claude.red    { color: #ff8888; }
+#custom-claude.critical { color: #ff4444; }
+

@@ -3,41 +3,85 @@
 position: top
 height: 24
 start:
-- type: workspaces
-center:
-- type: focused
-  icon_size: 16
+  - type: workspaces
 end:
-  - type: "volume"
-    format: "{icon} {percentage}%"
-    max_volume: 150
-    truncate: "middle"
-    icons:
-      volume_high: "󰕾"
-      volume_medium: "󰖀"
-      volume_low: "󰕿"
-      muted: "󰝟"
+  - type: inhibit
+    format_on: " "
+    format_off: " "
+  - type: script
+    cmd: "~/.config/ironbar/claude_usage.sh"
+    mode: poll
+    interval: 60000
   - type: sys_info
     format:
-    - '{cpu_percent}% '
-    - '{memory_percent}% '
+      - "  {load_average_1} {load_average_5} {load_average_15}"
+      - "  {cpu_percent}%"
+      - "  {memory_percent}%"
+      - "  {disk_free#G@/:.2}"
     interval:
       cpu: 1
-  - type: battery
+      disks: 5
+  - type: volume
+    format: "{icon} {percentage}%"
+    mute_format: " {percentage}%"
+    max_volume: 150
+    show_sources: false
+    icons:
+      volume_high: ""
+      volume_medium: ""
+      volume_low: ""
+      muted: ""
+  - type: volume
+    format: " {percentage}%"
+    mute_format: "  {percentage}%"
+    max_volume: 150
+    show_sinks: false
+  - type: network_manager
     icon_size: 16
+    types_blacklist:
+      - loopback
+  - type: brightness
+    format: " {percentage}%"
+  - type: battery
+    show_if: "[ -f /sys/class/power_supply/BAT0/capacity ]"
     format: "{percentage}%"
-    thresholds:
-      warning: 25
-      critical: 10
+    profiles:
+      warning:
+        when:
+          percent: 30
+          charging: false
+      critical:
+        when:
+          percent: 15
+          charging: false
   - type: keyboard
     show_scroll: false
     icons:
-      caps_on: 󰪛
       layout_map:
-        "English (US)": 🇺🇸
-        Russian: 🇺🇦
-  - type: tray
-    icon_size: 32
+        "English (US)": "󰌌 En"
+        Russian: "󰌌 Ru"
   - type: clock
-    format: "%Y-%m-%d %H:%M:%S"
+    format: "󰥔 %Y-%m-%d %H:%M:%S"
     format_popup: "%Y-%m-%d %H:%M:%S GMT%:::z"
+  - type: tray
+    icon_size: 18
+  - type: custom
+    name: power-menu
+    class: power-menu
+    bar:
+      - type: button
+        name: power-btn
+        label: "⏻ "
+        on_click: popup:toggle
+    popup:
+      - type: box
+        orientation: vertical
+        widgets:
+          - type: button
+            class: power-btn
+            label: "<span>󰐥</span>"
+            on_click: "!shutdown now"
+          - type: button
+            class: power-btn
+            label: "<span>󰜉</span>"
+            on_click: "!reboot"

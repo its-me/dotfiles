@@ -148,10 +148,10 @@ p() {
 
   case "$subcmd" in
     i)
-      paru -S "$@"
+      paru -Sy "$@"
       ;;
     id)
-      paru -S --asdeps "$@"
+      paru -Sy --asdeps "$@"
       ;;
     u)
       paru -Rus "$@"
@@ -761,8 +761,8 @@ a() {
       ;;
     p)
       echo "p <subcommand>        paru (runs paru -Syu with no arguments)"
-      echo "  i <packages>        paru -S <packages>"
-      echo "  id <packages>       paru -S --asdeps <packages>"
+      echo "  i <packages>        paru -Sy <packages>"
+      echo "  id <packages>       paru -Sy --asdeps <packages>"
       echo "  u <packages>        paru -Rus <packages>"
       echo "  q [packages]        paru -Qi [packages]"
       ;;

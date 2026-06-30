@@ -561,6 +561,36 @@ g() {
 }
 
 
+# etckeeper
+ek() {
+  if [[ $# -eq 0 ]]; then
+    sudo etckeeper
+    return
+  fi
+
+  local subcmd=$1
+  shift
+
+  case "$subcmd" in
+    c)
+      sudo etckeeper commit "${*:-auto commit $(date '+%Y-%m-%d %H:%M:%S')}"
+      ;;
+    s)
+      sudo etckeeper vcs status
+      ;;
+    d)
+      sudo etckeeper vcs diff
+      ;;
+    l)
+      sudo etckeeper vcs log
+      ;;
+    *)
+      sudo etckeeper "$subcmd" "$@"
+      ;;
+  esac
+}
+
+
 # docker
 d() {
   if [[ $# -eq 0 ]]; then
@@ -654,6 +684,7 @@ a() {
     echo "  arch <subcommand>         Arch Linux utilities"
     echo "  cz <subcommand>           chezmoi"
     echo "  d <subcommand>            docker"
+    echo "  ek <subcommand>           etckeeper"
     echo "  f <subcommand>            flutter"
     echo "  g <subcommand>            git"
     echo "  gb <subcommand>           GitHub backup"
@@ -738,6 +769,13 @@ a() {
       echo "  r [args]            flutter run [args]"
       echo "  d [args]            flutter devices [args]"
       echo "  e [args]            flutter emulators [args]"
+      ;;
+    ek)
+      echo "ek <subcommand>       etckeeper (runs via sudo)"
+      echo "  c [msg]             etckeeper commit [message]"
+      echo "  s                   etckeeper vcs status"
+      echo "  d                   etckeeper vcs diff"
+      echo "  l                   etckeeper vcs log"
       ;;
     g)
       echo "g <subcommand>        git"

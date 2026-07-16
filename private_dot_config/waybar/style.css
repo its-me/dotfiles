@@ -41,8 +41,3 @@
     padding-left: 1em;
 }
 
-#custom-claude.claude-low      { color: @foreground; }
-#custom-claude.claude-medium   { color: #ffee88; }
-#custom-claude.claude-high     { color: #ff8888; }
-#custom-claude.claude-critical { color: #ff4444; }
-

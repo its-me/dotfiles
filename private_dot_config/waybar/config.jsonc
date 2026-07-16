@@ -39,10 +39,10 @@
     },
     "custom/claude": {
         "format": "{}",
-        "interval": 60,
-        "exec": "~/.config/waybar/claude_usage.sh",
+        "interval": 300,
+        "exec": "ai-usagebar --vendor anthropic --icon '󰚩' --color-low '#eeeeee' --color-mid '#ffee88' --color-high '#ff8888' --color-critical '#ff4444' --json",
         "return-type": "json",
-        "exec-if": "command -v claude-usage",
+        "exec-if": "command -v ai-usagebar",
         "signal": 9,
         "on-click": "pkill -SIGRTMIN+9 waybar"
     },

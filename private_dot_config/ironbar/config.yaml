@@ -9,6 +9,11 @@ end:
     format_on: " "
     format_off: " "
   - type: script
+    cmd: "~/.config/ironbar/updates.sh"
+    mode: poll
+    interval: 10800000
+    tooltip: "{{~/.config/ironbar/arch_updates.sh | jq -r '.tooltip'}}"
+  - type: script
     cmd: "~/.config/ironbar/claude_usage.sh"
     mode: poll
     interval: 60000

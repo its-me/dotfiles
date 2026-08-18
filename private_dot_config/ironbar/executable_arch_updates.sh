@@ -6,7 +6,7 @@ check() {
 
 notify() {
   check notify-send && {
-    notify-send -a "UpdateCheck Waybar" "$@"
+    notify-send -a "UpdateCheck Ironbar" "$@"
     return
   }
   echo "$@"

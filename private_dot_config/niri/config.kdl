@@ -277,8 +277,8 @@ layout {
 // which may be more convenient to use.
 // See the binds section below for more spawn examples.
 
-// This line starts waybar, a commonly used bar for Wayland compositors.
-spawn-at-startup "~/.config/waybar/waybar_reload.sh"
+// This line starts ironbar, a status bar for Wayland compositors.
+spawn-at-startup "ironbar"
 spawn-at-startup "mako"
 // spawn-at-startup "gammastep"
 spawn-at-startup "swayidle" "-w" "timeout" "900" "niri msg action power-off-monitors" "timeout" "600" "swaylock -f --screenshots --clock --effect-blur 7x5 --effect-vignette 0.5:0.5 --datestr '%a %d %b' --fade-in 3 --indicator-idle-visible" "before-sleep" "swaylock -f --screenshots --clock --effect-blur 7x5 --effect-vignette 0.5:0.5 --datestr '%a %d %b' --indicator-idle-visible"

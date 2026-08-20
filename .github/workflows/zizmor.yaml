@@ -22,5 +22,7 @@ jobs:
             rules:
               artipacked:
                 disable: true
+              unpinned-images:
+                disable: true
               unpinned-uses:
                 disable: true

@@ -7,12 +7,14 @@ on:
 jobs:
   validate:
     runs-on: ubuntu-latest
+    container: ghcr.io/its-me/archlinux
     steps:
       - name: Checkout
         uses: actions/checkout@v7
 
       - name: Install chezmoi
-        run: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b "$HOME/.local/bin"
+        run: |
+          pacman -Sy --noconfirm --needed chezmoi
 
       - name: Install mock op (1Password CLI stub)
         run: |
@@ -29,7 +31,7 @@ jobs:
 
       - name: Validate template syntax
         run: |
-          export PATH="$HOME/.local/mockbin:$HOME/.local/bin:$PATH"
+          export PATH="$HOME/.local/mockbin:$PATH"
           fail=0
           while IFS= read -r -d '' f; do
             if ! out=$(chezmoi execute-template --source "$PWD" --file "$f" --init 2>&1); then

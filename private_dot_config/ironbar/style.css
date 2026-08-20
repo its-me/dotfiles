@@ -88,10 +88,6 @@ radio {
 
 /* --- clock --- */
 
-.clock {
-    font-weight: bold;
-}
-
 .popup-clock .calendar-clock {
     font-size: var(--size-xl);
     margin-bottom: var(--margin-xs);

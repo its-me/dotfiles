@@ -2,6 +2,7 @@
 
 position: top
 height: 24
+icon_theme: Adwaita
 start:
   - type: workspaces
 end:
@@ -19,16 +20,16 @@ end:
     interval: 60000
   - type: sys_info
     format:
-      - "  {load_average_1} {load_average_5} {load_average_15}"
-      - "  {cpu_percent}%"
-      - "  {memory_percent}%"
-      - "  {disk_free#G@/:.2}"
+      - "  {load_average_1} {load_average_5} {load_average_15}"
+      - "  {cpu_percent}%"
+      - "  {memory_percent}%"
+      - "  {disk_free#G@/:.2}"
     interval:
       cpu: 1
       disks: 5
   - type: volume
     format: "{icon} {percentage}%"
-    mute_format: " {percentage}%"
+    mute_format: "  {percentage}%"
     max_volume: 150
     show_sources: false
     icons:
@@ -37,8 +38,8 @@ end:
       volume_low: ""
       muted: ""
   - type: volume
-    format: " {percentage}%"
-    mute_format: "  {percentage}%"
+    format: " {percentage}%"
+    mute_format: "  {percentage}%"
     max_volume: 150
     show_sinks: false
   - type: network_manager
@@ -46,19 +47,11 @@ end:
     types_blacklist:
       - loopback
   - type: brightness
-    format: " {percentage}%"
-  - type: battery
-    show_if: "[ -f /sys/class/power_supply/BAT0/capacity ]"
-    format: "{percentage}%"
-    profiles:
-      warning:
-        when:
-          percent: 30
-          charging: false
-      critical:
-        when:
-          percent: 15
-          charging: false
+    format: " {percentage}%"
+  - type: script
+    cmd: "~/.config/ironbar/battery.sh"
+    mode: poll
+    interval: 60000
   - type: script
     cmd: "~/.config/ironbar/keyboard_layout.sh"
     mode: poll

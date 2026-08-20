@@ -59,12 +59,10 @@ end:
         when:
           percent: 15
           charging: false
-  - type: keyboard
-    show_scroll: false
-    icons:
-      layout_map:
-        "English (US)": "󰌌 En"
-        Russian: "󰌌 Ru"
+  - type: script
+    cmd: "~/.config/ironbar/keyboard_layout.sh"
+    mode: poll
+    interval: 1000
   - type: clock
     format: "󰥔 %Y-%m-%d %H:%M:%S"
     format_popup: "%Y-%m-%d %H:%M:%S GMT%:::z"

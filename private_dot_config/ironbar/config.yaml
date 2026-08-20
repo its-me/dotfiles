@@ -1,5 +1,6 @@
 # https://github.com/JakeStanger/ironbar/wiki/configuration-guide
 
+name: main
 position: top
 height: 24
 icon_theme: Adwaita
@@ -14,10 +15,17 @@ end:
     mode: poll
     interval: 10800000
     tooltip: "{{~/.config/ironbar/arch_updates.sh | jq -r '.tooltip'}}"
-  - type: script
-    cmd: "~/.config/ironbar/claude_usage.sh"
-    mode: poll
-    interval: 60000
+  - type: custom
+    name: claude-usage
+    class: claude-usage
+    bar:
+      - type: button
+        label: "{{60000:~/.config/ironbar/claude_usage.sh}}"
+    popup:
+      - type: label
+        label: "{{60000:~/.config/ironbar/claude_usage_popup.sh}}"
+    on_mouse_enter: "ironbar bar main show-popup claude-usage"
+    on_mouse_exit: "ironbar bar main hide-popup"
   - type: sys_info
     format:
       - "  {load_average_1} {load_average_5} {load_average_15}"

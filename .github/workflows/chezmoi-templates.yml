@@ -1,0 +1,43 @@
+name: chezmoi templates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install chezmoi
+        run: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b "$HOME/.local/bin"
+
+      - name: Install mock op (1Password CLI stub)
+        run: |
+          mkdir -p "$HOME/.local/mockbin"
+          cat > "$HOME/.local/mockbin/op" <<'EOF'
+          #!/bin/sh
+          case "$*" in
+            signin*) echo "dummy-session-token" ;;
+            *read*) echo "dummy-value" ;;
+            *) echo "mock-op: unsupported command: $*" >&2; exit 1 ;;
+          esac
+          EOF
+          chmod +x "$HOME/.local/mockbin/op"
+
+      - name: Validate template syntax
+        run: |
+          export PATH="$HOME/.local/mockbin:$HOME/.local/bin:$PATH"
+          fail=0
+          while IFS= read -r -d '' f; do
+            if ! out=$(chezmoi execute-template --file "$f" --init 2>&1); then
+              echo "::error file=$f::template failed to execute"
+              echo "$out"
+              fail=1
+            else
+              echo "OK: $f"
+            fi
+          done < <(find . -name '*.tmpl' -not -path './.git/*' -print0)
+          exit $fail

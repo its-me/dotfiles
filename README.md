@@ -11,7 +11,7 @@ Dotfiles for my desktop environment based on [Arch Linux](https://archlinux.org)
 | tool | description |
 | :--- | :--- |
 | [niri](https://github.com/YaLTeR/niri) | Wayland tiling compositor |
-| [waybar](https://github.com/Alexays/Waybar) | status bar |
+| [ironbar](https://github.com/JakeStanger/ironbar) | status bar |
 | [mako](https://github.com/emersion/mako) | notification daemon |
 | [fuzzel](https://codeberg.org/dnkl/fuzzel) | application launcher |
 | [darkman](https://darkman.whynothugo.nl) | light/dark theme switcher |

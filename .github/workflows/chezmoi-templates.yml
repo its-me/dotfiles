@@ -32,7 +32,7 @@ jobs:
           export PATH="$HOME/.local/mockbin:$HOME/.local/bin:$PATH"
           fail=0
           while IFS= read -r -d '' f; do
-            if ! out=$(chezmoi execute-template --file "$f" --init 2>&1); then
+            if ! out=$(chezmoi execute-template --source "$PWD" --file "$f" --init 2>&1); then
               echo "::error file=$f::template failed to execute"
               echo "$out"
               fail=1

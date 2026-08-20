@@ -37,11 +37,15 @@ end:
       volume_medium: ""
       volume_low: ""
       muted: ""
+    on_scroll_up: "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ -l 1.5"
+    on_scroll_down: "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
   - type: volume
     format: " {percentage}%"
     mute_format: "  {percentage}%"
     max_volume: 150
     show_sinks: false
+    on_scroll_up: "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%+ -l 1.5"
+    on_scroll_down: "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%-"
   - type: network_manager
     icon_size: 16
     types_blacklist:

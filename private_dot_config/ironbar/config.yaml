@@ -71,7 +71,14 @@ start:
           - Settings
           - Screensaver
   - type: workspaces
+  - type: launcher
+    favorites:
+      - dev.zed.Zed
+    truncate:
+      mode: end
+      max_length: 30
 end:
+  - type: notifications
   - type: inhibit
     format_on: " "
     format_off: " "

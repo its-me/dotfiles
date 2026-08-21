@@ -84,7 +84,7 @@ radio {
 }
 
 #start > * + *, #center > * + *, #end > * + * {
-    margin-left: var(--margin-lg);
+    margin-left: var(--margin-sm);
 }
 
 .popup {

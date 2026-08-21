@@ -71,14 +71,7 @@ start:
           - Settings
           - Screensaver
   - type: workspaces
-  - type: launcher
-    favorites:
-      - dev.zed.Zed
-    truncate:
-      mode: end
-      max_length: 30
 end:
-  - type: notifications
   - type: inhibit
     format_on: " "
     format_off: " "
@@ -145,6 +138,7 @@ end:
     format_popup: "%Y-%m-%d %H:%M:%S GMT%:::z"
   - type: tray
     icon_size: 18
+  - type: notifications
   - type: custom
     name: power-menu
     class: power-menu

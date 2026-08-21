@@ -119,10 +119,10 @@ end:
     show_sinks: false
     on_scroll_up: "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%+ -l 1.5"
     on_scroll_down: "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%-"
-  - type: network_manager
-    icon_size: 16
-    types_blacklist:
-      - loopback
+  - type: script
+    cmd: "~/.config/ironbar/network.sh"
+    mode: poll
+    interval: 5000
   - type: brightness
     format: " {percentage}%"
   - type: script

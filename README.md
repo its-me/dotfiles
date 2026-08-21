@@ -12,7 +12,7 @@ Dotfiles for my desktop environment based on [Arch Linux](https://archlinux.org)
 | :--- | :--- |
 | [niri](https://github.com/YaLTeR/niri) | Wayland tiling compositor |
 | [ironbar](https://github.com/JakeStanger/ironbar) | status bar |
-| [mako](https://github.com/emersion/mako) | notification daemon |
+| [swaync](https://github.com/ErikReider/SwayNotificationCenter) | notification daemon |
 | [fuzzel](https://codeberg.org/dnkl/fuzzel) | application launcher |
 | [darkman](https://darkman.whynothugo.nl) | light/dark theme switcher |
 | [swayidle](https://github.com/swaywm/swayidle) | idle management daemon |
@@ -32,6 +32,8 @@ Dotfiles for my desktop environment based on [Arch Linux](https://archlinux.org)
 | [numbat](https://numbat.dev) | scientific calculator |
 | [mpv](https://mpv.io) | media player |
 | [viu](https://github.com/atanunq/viu) | terminal image viewer |
+| [bashmount](https://github.com/jamielinux/bashmount) | removable drive mounter |
+| [aria2](https://aria2.github.io) | download utility |
 
 ### system
 

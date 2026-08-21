@@ -93,16 +93,16 @@ end:
     on_mouse_exit: "ironbar bar main hide-popup"
   - type: sys_info
     format:
-      - "  {load_average_1} {load_average_5} {load_average_15}"
-      - "  {cpu_percent}%"
-      - "  {memory_percent}%"
-      - "  {disk_free#G@/:.2}"
+      - "{load_average_1} {load_average_5} {load_average_15}"
+      - "{cpu_percent}%"
+      - "{memory_percent}%"
+      - "{disk_free#G@/:.2}"
     interval:
       cpu: 1
       disks: 5
   - type: volume
-    format: "{icon} {percentage}%"
-    mute_format: "  {percentage}%"
+    format: "{icon}{percentage}%"
+    mute_format: "{percentage}%"
     max_volume: 150
     show_sources: false
     icons:
@@ -113,14 +113,14 @@ end:
     on_scroll_up: "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ -l 1.5"
     on_scroll_down: "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
   - type: volume
-    format: " {percentage}%"
-    mute_format: "  {percentage}%"
+    format: "{percentage}%"
+    mute_format: "{percentage}%"
     max_volume: 150
     show_sinks: false
     on_scroll_up: "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%+ -l 1.5"
     on_scroll_down: "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%-"
   - type: brightness
-    format: " {percentage}%"
+    format: "{percentage}%"
   - type: script
     cmd: "~/.config/ironbar/network.sh"
     mode: poll
@@ -134,7 +134,7 @@ end:
     mode: poll
     interval: 1000
   - type: clock
-    format: "󰥔 %Y-%m-%d %H:%M:%S"
+    format: "󰥔%Y-%m-%d %H:%M:%S"
     format_popup: "%Y-%m-%d %H:%M:%S GMT%:::z"
   - type: tray
     icon_size: 18

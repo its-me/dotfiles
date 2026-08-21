@@ -103,45 +103,6 @@ radio {
     border-radius: 0.25em;
 }
 
-.popup-clipboard .item {
-    padding: var(--margin-xs);
-}
-
-.popup-clipboard .item + .item {
-    border-top: 1px solid var(--color-border-light);
-}
-
-/* --- launcher --- */
-
-.launcher .item + .item {
-    margin-left: 4px;
-}
-
-.launcher .item.open {
-    box-shadow: inset 0 -1px var(--color-white);
-}
-
-.launcher .item.focused {
-    box-shadow: inset 0 -1px var(--color-active);
-}
-
-.launcher .item.urgent {
-    box-shadow: inset 0 -1px var(--color-urgent);
-}
-
-.popup-launcher {
-    padding: var(--margin-sm);
-}
-
-.popup-launcher .popup-item {
-    padding: var(--margin-lg);
-    border-radius: 10px;
-}
-
-.popup-launcher .popup-item label {
-    margin-top: var(--margin-sm);
-}
-
 /* --- menu --- */
 
 .menu label {
@@ -161,30 +122,6 @@ radio {
     background-color: var(--color-dark-secondary);
 }
 
-/* --- music --- */
-
-.popup-music .album-art {
-    margin-right: var(--margin-lg);
-    border-radius: 5px;
-}
-
-.popup-music .icon-box {
-    margin-right: var(--margin-sm);
-}
-
-.popup-music .title .icon, .popup-music .title .label {
-    font-size: var(--size-lg);
-}
-
-.popup-music .artist .label, .popup-music .album .label {
-    margin-left: 6px;
-}
-
-.popup-music .volume .icon {
-    /* fix icon offset */
-    margin-right: 3px;
-}
-
 /* --- notifications --- */
 
 .notifications .count {
@@ -196,28 +133,6 @@ radio {
 
 .sysinfo > .item + .item {
     margin-left: var(--margin-sm);
-}
-
-/* --- tray --- */
-
-.tray popover contents {
-    padding: var(--margin-lg);
-}
-
-.tray .item + .item {
-    margin-left: var(--margin-xs);
-}
-
-/* --- volume --- */
-
-.volume .source {
-    margin-left: var(--margin-sm);
-}
-
-.popup-volume .device-box {
-    padding-right: var(--margin-lg);
-    margin-right: var(--margin-lg);
-    border-right: 1px solid var(--color-border-light);
 }
 
 /* --- workspaces --- */

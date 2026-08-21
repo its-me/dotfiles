@@ -84,7 +84,7 @@ radio {
 }
 
 #start > * + *, #center > * + *, #end > * + * {
-    margin-left: var(--margin-sm);
+    margin-left: var(--margin-xs);
 }
 
 .popup {
@@ -205,7 +205,7 @@ radio {
 }
 
 .tray .item + .item {
-    margin-left: var(--margin-sm);
+    margin-left: var(--margin-xs);
 }
 
 /* --- volume --- */

@@ -22,7 +22,7 @@
 }
 
 * {
-    font-family: sans-serif;
+    font-family: "JetBrainsMono Nerd Font Mono", sans-serif;
     font-size: var(--size-md);
     border-radius: 0;
     border: none;

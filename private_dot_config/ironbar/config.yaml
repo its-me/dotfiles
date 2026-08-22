@@ -134,7 +134,7 @@ end:
     mode: poll
     interval: 1000
   - type: clock
-    format: "<span size='150%'>󰥔</span>%Y-%m-%d %H:%M:%S"
+    format: "󰥔%Y-%m-%d %H:%M:%S"
     format_popup: "%Y-%m-%d %H:%M:%S GMT%:::z"
   - type: tray
     icon_size: 18

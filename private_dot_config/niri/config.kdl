@@ -348,6 +348,15 @@ window-rule {
     default-column-width { proportion 0.5; }
 }
 
+// Open the ironbar btop launcher as a floating popup under the bar.
+window-rule {
+    match app-id=r#"^btop-popup$"#
+    open-floating true
+    default-floating-position x=0 y=28 relative-to="top"
+    default-column-width { fixed 700; }
+    default-window-height { fixed 450; }
+}
+
 // Example: block out two password managers from screen capture.
 // (This example rule is commented out with a "/-" in front.)
 /-window-rule {

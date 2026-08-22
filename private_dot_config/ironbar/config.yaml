@@ -92,6 +92,13 @@ end:
     on_mouse_enter: "ironbar bar main show-popup claude-usage"
     on_mouse_exit: "ironbar bar main hide-popup"
   - type: custom
+    name: btop
+    class: btop
+    bar:
+      - type: button
+        label: "btop"
+        on_click: "!kitty --class btop-popup --single-instance -e btop"
+  - type: custom
     name: load-average
     class: load-average
     bar:

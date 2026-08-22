@@ -91,14 +91,29 @@ end:
         label: "{{60000:~/.config/ironbar/claude_usage_popup.sh}}"
     on_mouse_enter: "ironbar bar main show-popup claude-usage"
     on_mouse_exit: "ironbar bar main hide-popup"
+  - type: custom
+    name: load-average
+    class: load-average
+    bar:
+      - type: button
+        label: "<span size='150%'></span>{{1000:awk '{print $1, $2, $3}' /proc/loadavg}}"
+        on_click: popup:toggle
+    popup:
+      - type: box
+        orientation: vertical
+        widgets:
+          - type: sys_info
+            format:
+              - "<span size='150%'></span>{cpu_percent}%"
+              - "<span size='150%'></span>{memory_percent}%"
+            interval:
+              cpu: 1
+          - type: brightness
+            format: "<span size='150%'></span>{percentage}%"
   - type: sys_info
     format:
-      - "<span size='150%'></span>{load_average_1} {load_average_5} {load_average_15}"
-      - "<span size='150%'></span>{cpu_percent}%"
-      - "<span size='150%'></span>{memory_percent}%"
       - "<span size='150%'></span>{disk_free#G@/:.2}"
     interval:
-      cpu: 1
       disks: 5
   - type: volume
     format: "<span size='150%'>{icon}</span>{percentage}%"
@@ -119,8 +134,6 @@ end:
     show_sinks: false
     on_scroll_up: "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%+ -l 1.5"
     on_scroll_down: "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%-"
-  - type: brightness
-    format: "<span size='150%'></span>{percentage}%"
   - type: script
     cmd: "~/.config/ironbar/network.sh"
     mode: poll

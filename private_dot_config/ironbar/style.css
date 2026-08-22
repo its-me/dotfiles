@@ -184,3 +184,13 @@ due to widgets being wrapped in GtkRevealers */
 .popup-claude-usage label {
     font-family: "JetBrainsMono Nerd Font Mono", monospace;
 }
+
+/* --- custom: load average ---  */
+
+.popup-load-average {
+    padding: var(--margin-lg);
+}
+
+.popup-load-average box > * + * {
+    margin-top: var(--margin-sm);
+}

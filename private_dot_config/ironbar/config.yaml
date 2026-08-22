@@ -97,7 +97,7 @@ end:
     bar:
       - type: button
         label: "btop"
-        on_click: "!kitty --class btop-popup --single-instance -e btop"
+        on_click: "!niri-scratchpad target --spawn 'kitty --class btop-popup --single-instance -e btop' --as-float appid btop-popup"
   - type: custom
     name: load-average
     class: load-average

@@ -110,6 +110,10 @@ input {
     position x=1280 y=0
 }
 
+// Static scratchpad workspace used by niri-scratchpad-rs to park
+// toggled windows (e.g. the ironbar btop popup) between show/hide.
+workspace "stash"
+
 // Settings that influence how windows are positioned and sized.
 // Find more information on the wiki:
 // https://yalter.github.io/niri/Configuration:-Layout

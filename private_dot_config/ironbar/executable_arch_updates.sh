@@ -21,31 +21,16 @@ stringToLen() {
     printf "%-20s" "$STRING"
   fi
 }
-check aur || {
-  notify "Ensure aurutils is installed"
+check paru || {
+  notify "Ensure paru is installed"
   cat <<EOF
-  {"text":"ERR","tooltip":"aurutils or pacman-contrib is not installed"}
-EOF
-  exit 1
-}
-
-
-check checkupdates || {
-  notify "Ensure pacman-contrib is installed"
-  cat <<EOF
-  {"text":"ERR","tooltip":"pacman-contrib or aurutils is not installed"}
+  {"text":"ERR","tooltip":"paru is not installed"}
 EOF
   exit 1
 }
 IFS=$'\n'$'\r'
 
-killall -q checkupdates
-
-cup() {
-  checkupdates --nocolor
-  pacman -Qm | aur vercmp
-}
-mapfile -t updates < <(cup)
+mapfile -t updates < <(paru -Qu --color never 2>/dev/null)
 
 text=${#updates[@]}
 tooltip="<b>$text  updates (arch+aur) </b>\n"

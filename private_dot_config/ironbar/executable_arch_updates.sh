@@ -28,6 +28,20 @@ check paru || {
 EOF
   exit 1
 }
+
+# Both the bar text and tooltip invoke this script independently on the
+# same interval, which would otherwise run paru's AUR lookup twice per
+# cycle. Cache the result for a few minutes so the second call is free.
+CACHE_FILE="/tmp/arch_updates_cache_$(id -u).json"
+CACHE_MAX_AGE=300
+if [ -f "$CACHE_FILE" ]; then
+  cache_age=$(($(date +%s) - $(stat -c %Y "$CACHE_FILE")))
+  if [ "$cache_age" -lt "$CACHE_MAX_AGE" ]; then
+    cat "$CACHE_FILE"
+    exit 0
+  fi
+fi
+
 IFS=$'\n'$'\r'
 
 mapfile -t updates < <(paru -Qu --color never 2>/dev/null)
@@ -48,6 +62,6 @@ for i in "${updates[@]}"; do
 done
 tooltip=${tooltip::-2}
 
-cat <<EOF
-{ "text":"$text", "tooltip":"$tooltip"}
-EOF
+result="{ \"text\":\"$text\", \"tooltip\":\"$tooltip\"}"
+printf '%s' "$result" > "$CACHE_FILE"
+printf '%s\n' "$result"

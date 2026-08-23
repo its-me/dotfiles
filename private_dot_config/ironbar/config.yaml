@@ -79,7 +79,7 @@ end:
     cmd: "~/.config/ironbar/updates.sh"
     mode: poll
     interval: 10800000
-    tooltip: "{{~/.config/ironbar/arch_updates.sh | jq -r '.tooltip'}}"
+    tooltip: "{{10800000:~/.config/ironbar/arch_updates.sh | jq -r '.tooltip'}}"
   - type: custom
     name: claude-usage
     class: claude-usage

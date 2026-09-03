@@ -24,6 +24,14 @@ rules = [
   { url = "*.flv", use = "mpv" },
   { mime = "video/x-ms-wmv", use = "mpv" },
   { url = "*.wmv", use = "mpv" },
+  { mime = "audio/*", use = "mpv" },
+  { url = "*.mp3", use = "mpv" },
+  { url = "*.flac", use = "mpv" },
+  { url = "*.wav", use = "mpv" },
+  { url = "*.ogg", use = "mpv" },
+  { url = "*.m4a", use = "mpv" },
+  { url = "*.opus", use = "mpv" },
+  { url = "*.aac", use = "mpv" },
   { mime = "image/*", use = "vui" },
 ]
 

@@ -37,13 +37,13 @@ rules = [
 
 [opener]
 chrome = [
-  { run = 'google-chrome-stable "$@"', orphan = true, desc = "Open in Chrome" }
+  { run = 'google-chrome-stable %s', orphan = true, desc = "Open in Chrome" }
 ]
 mpv = [
-  { run = 'mpv "$@"', orphan = true, desc = "Play in mpv" }
+  { run = 'mpv %s', orphan = true, desc = "Play in mpv" }
 ]
 vui = [
-  { run = 'viu "$1"', desc = "viu", block = true }
+  { run = 'viu %s1', desc = "viu", block = true }
 ]
 
 [plugin]

@@ -110,9 +110,11 @@ input {
     position x=1280 y=0
 }
 
-// Pinned workspaces 1-9, and a final "s" (stash) workspace used
-// by niri-scratchpad-rs to park toggled windows (e.g. the ironbar
-// btop popup) between show/hide.
+// Pinned workspaces 1-9, and a final "stash" workspace used by
+// niri-scratchpad-rs to park toggled windows (e.g. the ironbar
+// btop popup) between show/hide. The name "stash" is required
+// verbatim - niri-scratchpad-rs hardcodes it and cannot target
+// a differently-named workspace.
 workspace "1"
 workspace "2"
 workspace "3"
@@ -122,7 +124,7 @@ workspace "6"
 workspace "7"
 workspace "8"
 workspace "9"
-workspace "s"
+workspace "stash"
 
 // Settings that influence how windows are positioned and sized.
 // Find more information on the wiki:

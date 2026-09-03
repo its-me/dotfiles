@@ -661,6 +661,39 @@ f() {
 }
 
 
+# terraform
+tf() {
+  if [[ $# -eq 0 ]]; then
+    terraform
+    return
+  fi
+
+  local subcmd=$1
+  shift
+
+  case "$subcmd" in
+    i)
+      terraform init "$@"
+      ;;
+    v)
+      terraform validate "$@"
+      ;;
+    p)
+      terraform plan "$@"
+      ;;
+    a)
+      terraform apply "$@"
+      ;;
+    d)
+      terraform destroy "$@"
+      ;;
+    *)
+      terraform "$subcmd" "$@"
+      ;;
+  esac
+}
+
+
 # aliases help
 a() {
   if [[ $# -eq 0 ]]; then
@@ -691,6 +724,7 @@ a() {
     echo "  k <subcommand>            kopia"
     echo "  p <subcommand>            paru"
     echo "  rage <subcommand>         rage encryption"
+    echo "  tf <subcommand>           terraform"
     return
   fi
 
@@ -808,6 +842,14 @@ a() {
       echo "rage <subcommand>"
       echo "  e <key> <file> [out]    encrypt file (key can be a 1Password document name)"
       echo "  d <key> <file> [out]    decrypt file (key can be a 1Password document name)"
+      ;;
+    tf)
+      echo "tf <subcommand>       terraform"
+      echo "  i [args]            terraform init [args]"
+      echo "  v [args]            terraform validate [args]"
+      echo "  p [args]            terraform plan [args]"
+      echo "  a [args]            terraform apply [args]"
+      echo "  d [args]            terraform destroy [args]"
       ;;
     *)
       echo "Unknown alias: $1" >&2

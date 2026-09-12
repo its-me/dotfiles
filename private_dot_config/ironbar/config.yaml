@@ -103,7 +103,7 @@ end:
     class: load-average
     bar:
       - type: button
-        label: "<span size='150%'></span>{{1000:awk '{print $1, $2, $3}' /proc/loadavg}}"
+        label: "<span size='150%'></span> {{1000:awk '{print $1, $2, $3}' /proc/loadavg}}"
         on_click: popup:toggle
     popup:
       - type: box
@@ -111,27 +111,27 @@ end:
         widgets:
           - type: sys_info
             format:
-              - "<span size='150%'></span>{cpu_percent}%"
-              - "<span size='150%'></span>{memory_percent}%"
+              - "<span size='150%'></span> {cpu_percent}%"
+              - "<span size='150%'></span> {memory_percent}%"
             interval:
               cpu: 1
           - type: brightness
-            format: "<span size='150%'></span>{percentage}%"
+            format: "<span size='150%'></span> {percentage}%"
           - type: volume
-            format: "<span size='150%'></span>{percentage}%"
-            mute_format: "<span size='150%'></span>{percentage}%"
+            format: "<span size='150%'></span> {percentage}%"
+            mute_format: "<span size='150%'></span> {percentage}%"
             max_volume: 150
             show_sinks: false
             on_scroll_up: "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%+ -l 1.5"
             on_scroll_down: "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%-"
   - type: sys_info
     format:
-      - "<span size='150%'></span>{disk_free#G@/:.2}"
+      - "<span size='150%'></span> {disk_free#G@/:.2}"
     interval:
       disks: 5
   - type: volume
-    format: "<span size='150%'>{icon}</span>{percentage}%"
-    mute_format: "<span size='150%'></span>{percentage}%"
+    format: "<span size='150%'>{icon}</span> {percentage}%"
+    mute_format: "<span size='150%'></span> {percentage}%"
     max_volume: 150
     show_sources: false
     icons:
@@ -154,7 +154,7 @@ end:
     mode: poll
     interval: 1000
   - type: clock
-    format: "󰥔%Y-%m-%d %H:%M:%S"
+    format: "󰥔 %Y-%m-%d %H:%M:%S"
     format_popup: "%Y-%m-%d %H:%M:%S GMT%:::z"
   - type: tray
     icon_size: 18

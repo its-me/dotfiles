@@ -687,6 +687,18 @@ tf() {
     d)
       terraform destroy "$@"
       ;;
+    w)
+      local wscmd=$1
+      [[ $# -gt 0 ]] && shift
+      case "$wscmd" in
+        n) terraform workspace new "$@" ;;
+        l) terraform workspace list "$@" ;;
+        s) terraform workspace select "$@" ;;
+        c) terraform workspace show "$@" ;;
+        d) terraform workspace delete "$@" ;;
+        *) terraform workspace $wscmd "$@" ;;
+      esac
+      ;;
     *)
       terraform "$subcmd" "$@"
       ;;
@@ -850,6 +862,11 @@ a() {
       echo "  p [args]            terraform plan [args]"
       echo "  a [args]            terraform apply [args]"
       echo "  d [args]            terraform destroy [args]"
+      echo "  w n <name>          terraform workspace new <name>"
+      echo "  w l                 terraform workspace list"
+      echo "  w s <name>          terraform workspace select <name>"
+      echo "  w c                 terraform workspace show (current)"
+      echo "  w d <name>          terraform workspace delete <name>"
       ;;
     *)
       echo "Unknown alias: $1" >&2

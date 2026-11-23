@@ -469,7 +469,7 @@ gb() {
 
       echo "[INFO] Local SHA-1: $local_sha1"
       for upstream in "${upstreams[@]}"; do
-        upstream_sha1=$(rclone hashsum sha1 "${upstream%/}/$encrypted" | awk '{print $1}')
+        upstream_sha1=$(rclone hashsum sha1 --progress=false "${upstream%/}/$encrypted" | awk '{print $1}')
         echo "[INFO] ${upstream} SHA-1: $upstream_sha1"
         if [[ "$local_sha1" != "$upstream_sha1" ]]; then
           echo "Error: Checksum mismatch on ${upstream}!" >&2

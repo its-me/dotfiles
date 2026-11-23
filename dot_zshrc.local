@@ -468,11 +468,25 @@ gb() {
       upstreams=(${=upstreams_str})
 
       echo "[INFO] Local SHA-1: $local_sha1"
+      local attempt max_attempts=3
       for upstream in "${upstreams[@]}"; do
-        upstream_sha1=$(rclone hashsum sha1 --progress=false "${upstream%/}/$encrypted" | awk '{print $1}')
-        echo "[INFO] ${upstream} SHA-1: $upstream_sha1"
+        for (( attempt = 1; attempt <= max_attempts; attempt++ )); do
+          upstream_sha1=$(rclone hashsum sha1 --progress=false "${upstream%/}/$encrypted" | awk '{print $1}')
+          echo "[INFO] ${upstream} SHA-1: ${upstream_sha1:-<missing>}"
+          [[ "$local_sha1" == "$upstream_sha1" ]] && break
+
+          if [[ -z "$upstream_sha1" ]]; then
+            echo "[WARN] File missing on ${upstream}" >&2
+          else
+            echo "[WARN] Checksum mismatch on ${upstream}" >&2
+          fi
+          (( attempt == max_attempts )) && break
+          echo "[INFO] Re-uploading directly to ${upstream} (attempt $((attempt + 1))/${max_attempts})..."
+          rclone copyto "$encrypted" "${upstream%/}/$encrypted" --ignore-times --progress
+        done
+
         if [[ "$local_sha1" != "$upstream_sha1" ]]; then
-          echo "Error: Checksum mismatch on ${upstream}!" >&2
+          echo "Error: Checksum verification failed on ${upstream} after ${max_attempts} attempt(s)!" >&2
           all_ok=false
         fi
       done
